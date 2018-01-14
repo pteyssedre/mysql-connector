@@ -1,0 +1,38 @@
+{
+  "name": "mysqlconnector",
+  "version": "1.0.0",
+  "description": "MySQL connector",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "tsc",
+    "build": "tsc",
+    "test": "mocha"
+  },
+  "keywords": [
+    "mysql",
+    "connector",
+    "typescript",
+    "async",
+    "await",
+    "transaction",
+    "dbcontext"
+  ],
+  "author": {
+    "name": "Pierre Teyssedre",
+    "email": "pierre@teyssedre.ca"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "mysql": "^2.15.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.0",
+    "@types/mocha": "^2.2.46",
+    "@types/mysql": "^2.15.2",
+    "chai": "^4.1.2",
+    "mocha": "^4.1.0",
+    "ts-node": "^4.1.0",
+    "tslint": "^5.9.1",
+    "typescript": "^2.6.2"
+  }
+}
