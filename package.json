@@ -4,7 +4,7 @@
   "description": "MySQL connector",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha ./dist/test --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "keywords": [
     "mysql",
@@ -28,6 +28,8 @@
     "@types/mocha": "^2.2.46",
     "@types/mysql": "^2.15.2",
     "chai": "^4.1.2",
+    "coveralls": "^3.0.0",
+    "istanbul": "^0.4.5",
     "mocha": "^4.1.0",
     "ts-node": "^4.1.0",
     "tslint": "^5.9.1",
