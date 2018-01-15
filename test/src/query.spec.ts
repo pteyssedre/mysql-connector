@@ -1,6 +1,8 @@
 import chai = require("chai");
 import {DefaultColumn} from "../../src/queries/column/column-default";
 import {Create} from "../../src/queries/create/create";
+import {Delete} from "../../src/queries/delete";
+import {Drop} from "../../src/queries/drop/drop";
 import {Insert} from "../../src/queries/insert";
 import {Select} from "../../src/queries/select";
 import {Update} from "../../src/queries/update";
@@ -29,7 +31,23 @@ describe("Query", () => {
         expect(select.sql).to.be.eq("SELECT * FROM users WHERE id = 1");
     });
 
+    it("Should throw a exception if no properties are provided", () => {
+        expect(() => {
+            Select.Properties();
+        }).to.throw(Error);
+    });
+
+    it("Should throw a exception if invalid properties are provided", () => {
+        expect(() => {
+            Select.Properties("", "");
+        }).to.throw(Error);
+    });
+
     it("Should throw a exception if none table is provided", () => {
+        expect(() => {
+            Select.Properties("username").table("");
+        }).to.throw(Error);
+
         expect(() => {
             Select.Table("");
         }).to.throw(Error);
@@ -41,10 +59,22 @@ describe("Query", () => {
         }).to.throw(Error);
     });
 
-    it("Should create a insert query", () => {
+    it("Should create a insert query from model", () => {
         const insert = Insert.InTo("user").fromModel({username: "toto", FirstName: "pierre", LastName: "test"});
         expect(insert.sql)
             .to.be.eq("INSERT INTO user (username, FirstName, LastName) VALUES ('toto', 'pierre', 'test')");
+    });
+
+    it("Should create a insert query with property", () => {
+        const insert = Insert.InTo("user").property("username", "toto");
+        expect(insert.sql)
+            .to.be.eq("INSERT INTO user SET username = 'toto'");
+    });
+
+    it("Should create a insert query with property", () => {
+        const insert = Insert.InTo("user").property("login_fail", 1);
+        expect(insert.sql)
+            .to.be.eq("INSERT INTO user SET login_fail = 1");
     });
 
     it("Should throw a exception if none valid table is provided in Insert", () => {
@@ -59,6 +89,12 @@ describe("Query", () => {
         }).to.throw(Error);
         expect(() => {
             Insert.InTo("user").fromModel(undefined);
+        }).to.throw(Error);
+    });
+
+    it("Should throw a exception if key is invalid", () => {
+        expect(() => {
+            Insert.InTo("user").property("", "chat");
         }).to.throw(Error);
     });
 
@@ -87,7 +123,7 @@ describe("Query", () => {
             .withColumnName("cityNumber").asInt64().notNull()
             .withColumnName("text_t").asText().hasDefault("T_T")
             .withColumnName("float_t").asFloat()
-            .withColumnName("decimal_t").asDecimal()
+            .withColumnName("decimal_t").asDecimal().hasDefault(0)
             .withColumnName("decimal_set_t").asDecimal(10, 4)
             .withColumnName("date_t").asDate().hasDefault(DefaultColumn.LOCALTIME)
             .withColumnName("datetime_t").asDateTime().hasDefault(DefaultColumn.LOCALTIMESTAMP)
@@ -97,7 +133,7 @@ describe("Query", () => {
         expect(create.toString())
             .to.be.eq("CREATE TABLE chat ( id INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
             " race VARCHAR(255) NOT NULL, name VARCHAR(400) NOT NULL, cityNumber BIGINT NOT NULL, " +
-            "text_t TEXT DEFAULT 'T_T', float_t FLOAT, decimal_t DECIMAL, decimal_set_t DECIMAL(10,4), " +
+            "text_t TEXT DEFAULT 'T_T', float_t FLOAT, decimal_t DECIMAL DEFAULT 0, decimal_set_t DECIMAL(10,4), " +
             "date_t DATE DEFAULT LOCALTIME, datetime_t DATETIME DEFAULT LOCALTIMESTAMP, " +
             "timestamp_t TIMESTAMP DEFAULT CURRENT_TIMESTAMP, nullable_t BOOLEAN DEFAULT NULL)");
     });
@@ -120,6 +156,20 @@ describe("Query", () => {
 
         expect(createFk.toString()).to.be.eq("CREATE TABLE users ( id INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
             " contact_id INT NOT NULL, FOREIGN KEY my_super_fk(contact_id) REFERENCES contacts(id))");
+    });
+
+    it("Should throw a error when database name is not valid", () => {
+        expect(() => {
+            Create.Database("");
+        }).to.throw(Error);
+    });
+
+    it("Should throw a error when table name is not valid", () => {
+        expect(() => {
+            Create.Table("")
+                .withColumnName("id").asInt32().isIdentity()
+                .withColumnName("contact_id").asInt32().notNull();
+        }).to.throw(Error);
     });
 
     it("Should throw a error when property of the foreign key is not valid", () => {
@@ -145,7 +195,7 @@ describe("Query", () => {
             Create.Table("users")
                 .withColumnName("id").asInt32().isIdentity()
                 .withColumnName("contact_id").asInt32().notNull()
-                .withForeignKey("c_id", "", "id");
+                .withForeignKey("contact_id", "", "id");
         }).to.throw(Error);
     });
 
@@ -154,7 +204,52 @@ describe("Query", () => {
             Create.Table("users")
                 .withColumnName("id").asInt32().isIdentity()
                 .withColumnName("contact_id").asInt32().notNull()
-                .withForeignKey("c_id", "contacts", "");
+                .withForeignKey("contact_id", "contacts", "");
         }).to.throw(Error);
+    });
+
+    it("Should throw a error when column name is not valid", () => {
+        expect(() => {
+            Create.Table("users")
+                .withColumnName("id").asInt32().isIdentity()
+                .withColumnName("").asInt32().notNull()
+                .withForeignKey("contact_id", "contacts", "");
+        }).to.throw(Error);
+    });
+
+    it("Should throw a error when default value of column is not valid", () => {
+        expect(() => {
+            Create.Table("users")
+                .withColumnName("id").asInt32().isIdentity()
+                .withColumnName("contact_id").asInt32().notNull().hasDefault("");
+        }).to.throw(Error);
+    });
+
+    it("Should generate a delete query", () => {
+        const qu = Delete.From("user").where("email = 'user@email.com'");
+        expect(qu.toString()).to.eq("DELETE FROM user WHERE email = 'user@email.com'");
+    });
+
+    it("Should throw an error in a delete query when table is not valid", () => {
+        expect(() => {
+            Delete.From("").where("email = 'user@email.com'");
+        }).throw(Error);
+    });
+
+    it("Should throw an error in a delete query when where is not valid", () => {
+        expect(() => {
+            Delete.From("user").where("");
+        }).throw(Error);
+    });
+
+    it("Should create a drop query", () => {
+        const q = Drop.Database("test");
+        expect(q.toString()).to.eq("DROP DATABASE IF EXISTS test");
+    });
+
+    it("Should throw a exception in a drop query if name is not valid", () => {
+        expect(() => {
+            Drop.Database("");
+        }).throw(Error);
     });
 });

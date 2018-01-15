@@ -82,7 +82,7 @@ export class Column extends Query implements ColumnOptions, ColumnTypes {
     }
 
     public hasDefault(def: DefaultColumn | string | number): this {
-        if (!def) {
+        if (!def && def !== 0) {
             throw new Error("invalid default value");
         }
         const m = DefaultColumn[def as any];

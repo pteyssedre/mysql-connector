@@ -9,6 +9,9 @@ export class Select extends Query {
         const select = new Select();
         for (let i = 0; i < properties.length; i++) {
             const p = properties[i];
+            if (!p) {
+                throw new Error("invalid property at index:" + i);
+            }
             select.sql += " " + p.trim();
             if (i + 1 < properties.length) {
                 select.sql += ",";

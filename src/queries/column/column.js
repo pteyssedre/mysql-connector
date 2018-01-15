@@ -69,7 +69,7 @@ class Column extends query_1.Query {
         return this;
     }
     hasDefault(def) {
-        if (!def) {
+        if (!def && def !== 0) {
             throw new Error("invalid default value");
         }
         const m = column_default_1.DefaultColumn[def];

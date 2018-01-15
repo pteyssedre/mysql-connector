@@ -3,6 +3,6 @@ export declare class Insert extends Query {
     static InTo(table: string): Insert;
     private properties;
     private constructor();
-    property(key: string, value: string | null | number): void;
+    property(key: string, value: string | number): this;
     fromModel(obj: any): this;
 }

@@ -18,11 +18,14 @@ export class Insert extends Query {
         this.sql = "INSERT INTO";
     }
 
-    public property(key: string, value: string|null|number) {
+    public property(key: string, value: string | number): this {
         if (!key) {
             throw new Error("parameter need to be a valid key");
         }
-        this.sql += `${ this.properties > 0 ? "" : " SET "} ${key} = ${typeof value}`;
+        this.sql += ` ${ this.properties > 0 ? "" : "SET"} ${key} = ${typeof value === "string" ?
+            "'" + value + "'" : value.toString()}`;
+        this.properties++;
+        return this;
     }
 
     public fromModel(obj: any): this {

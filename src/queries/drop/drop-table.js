@@ -4,7 +4,7 @@ const query_1 = require("../query");
 class DropDatabase extends query_1.Query {
     constructor(name) {
         super();
-        this.sql = `DROP DATABASE IF EXISTS ${name};`;
+        this.sql = `DROP DATABASE IF EXISTS ${name}`;
     }
 }
 exports.DropDatabase = DropDatabase;

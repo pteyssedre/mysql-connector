@@ -19,7 +19,10 @@ class Insert extends query_1.Query {
         if (!key) {
             throw new Error("parameter need to be a valid key");
         }
-        this.sql += `${this.properties > 0 ? "" : " SET "} ${key} = ${typeof value}`;
+        this.sql += ` ${this.properties > 0 ? "" : "SET"} ${key} = ${typeof value === "string" ?
+            "'" + value + "'" : value.toString()}`;
+        this.properties++;
+        return this;
     }
     fromModel(obj) {
         if (!obj || (typeof obj !== "object")) {
