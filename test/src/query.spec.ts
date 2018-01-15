@@ -66,9 +66,9 @@ describe("Query", () => {
     });
 
     it("Should create a insert query with property", () => {
-        const insert = Insert.InTo("user").property("username", "toto");
+        const insert = Insert.InTo("user").property("username", "toto").property("state", 1);
         expect(insert.sql)
-            .to.be.eq("INSERT INTO user SET username = 'toto'");
+            .to.be.eq("INSERT INTO user SET username = 'toto', state = 1");
     });
 
     it("Should create a insert query with property", () => {
@@ -89,6 +89,18 @@ describe("Query", () => {
         }).to.throw(Error);
         expect(() => {
             Insert.InTo("user").fromModel(undefined);
+        }).to.throw(Error);
+    });
+
+    it("Should throw an exception if fromModel is called after property", () => {
+        expect(() => {
+            Insert.InTo("user").property("username", "toto").fromModel({});
+        }).to.throw(Error);
+    });
+
+    it("Should throw an exception if property is called after fromModel", () => {
+        expect(() => {
+            Insert.InTo("user").fromModel({username: "toto"}).property("username", "toto");
         }).to.throw(Error);
     });
 

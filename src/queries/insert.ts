@@ -19,16 +19,23 @@ export class Insert extends Query {
     }
 
     public property(key: string, value: string | number): this {
+        if (this.properties === -1) {
+            throw new Error("cannot set property if fromModel has already been called");
+        }
         if (!key) {
             throw new Error("parameter need to be a valid key");
         }
-        this.sql += ` ${ this.properties > 0 ? "" : "SET"} ${key} = ${typeof value === "string" ?
+        this.sql += `${ this.properties > 0 ? ", " : " SET "}${key} = ${typeof value === "string" ?
             "'" + value + "'" : value.toString()}`;
         this.properties++;
         return this;
     }
 
     public fromModel(obj: any): this {
+        if (this.properties > 0) {
+            throw new Error("cannot set model if property have already been called");
+        }
+        this.properties = -1;
         if (!obj || (typeof obj !== "object")) {
             throw new Error("parameter must be an object");
         }
