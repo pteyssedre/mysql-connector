@@ -7,7 +7,7 @@ of your application
 
 To install simply run the `npm` command
 ```bash
-npm i mysql-connector
+npm i mysqlconnector
 ```
 
 The library offer two main approach of a SQL operation: `query` and `transaction`  

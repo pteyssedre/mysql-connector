@@ -1,11 +1,9 @@
 {
   "name": "mysqlconnector",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "MySQL connector",
   "main": "index.js",
   "scripts": {
-    "postinstall": "tsc",
-    "build": "tsc",
     "test": "mocha"
   },
   "keywords": [
