@@ -12,8 +12,6 @@ export class MySqlConnection {
 
     public connectAsync() {
         return new Promise<void>((resolve, reject) => {
-            // noinspection TsLint
-            console.log("invoke connectAsync");
             this.conn = mysql.createConnection({
                 database: this.db,
                 host: this.hostname,
@@ -32,8 +30,6 @@ export class MySqlConnection {
 
     public queryAsync(query: string) {
         return new Promise<any>((resolve, reject) => {
-            // noinspection TsLint
-            console.log("invoke queryAsync", query);
             this.conn.query(query, (error, result) => {
                 if (error) {
                     return reject(error);

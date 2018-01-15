@@ -1,10 +1,9 @@
 import chai = require("chai");
+import {DefaultColumn} from "../../src/queries/column/column-default";
 import {Create} from "../../src/queries/create/create";
 import {Insert} from "../../src/queries/insert";
 import {Select} from "../../src/queries/select";
 import {Update} from "../../src/queries/update";
-import {DefaultColumn} from "../../src/queries/column/column-default";
-import {type} from "os";
 
 const expect = chai.expect;
 
@@ -81,8 +80,6 @@ describe("Query", () => {
     });
 
     it("Should create a table", () => {
-        // noinspection TsLint
-        console.log(typeof DefaultColumn.LOCALTIMESTAMP)
         const create = Create.Table("chat")
             .withColumnName("id").asInt32().isIdentity()
             .withColumnName("race").asString().notNull()
@@ -105,4 +102,59 @@ describe("Query", () => {
             "timestamp_t TIMESTAMP DEFAULT CURRENT_TIMESTAMP, nullable_t BOOLEAN DEFAULT NULL)");
     });
 
+    it("Should create a table with foreign key with default name", () => {
+        const createFk = Create.Table("users")
+            .withColumnName("id").asInt32().isIdentity()
+            .withColumnName("contact_id").asInt32().notNull()
+            .withForeignKey("contact_id", "contacts", "id");
+
+        expect(createFk.toString()).to.be.eq("CREATE TABLE users ( id INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
+            " contact_id INT NOT NULL, FOREIGN KEY fk_contact_id_contacts(contact_id) REFERENCES contacts(id))");
+    });
+
+    it("Should create a table with foreign key with custom name", () => {
+        const createFk = Create.Table("users")
+            .withColumnName("id").asInt32().isIdentity()
+            .withColumnName("contact_id").asInt32().notNull()
+            .withForeignKey("contact_id", "contacts", "id", "my_super_fk");
+
+        expect(createFk.toString()).to.be.eq("CREATE TABLE users ( id INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
+            " contact_id INT NOT NULL, FOREIGN KEY my_super_fk(contact_id) REFERENCES contacts(id))");
+    });
+
+    it("Should throw a error when property of the foreign key is not valid", () => {
+        expect(() => {
+            Create.Table("users")
+                .withColumnName("id").asInt32().isIdentity()
+                .withColumnName("contact_id").asInt32().notNull()
+                .withForeignKey("", "contacts", "id");
+        }).to.throw(Error);
+    });
+
+    it("Should throw a error when property of the foreign key is not defined", () => {
+        expect(() => {
+            Create.Table("users")
+                .withColumnName("id").asInt32().isIdentity()
+                .withColumnName("contact_id").asInt32().notNull()
+                .withForeignKey("c_id", "contacts", "id");
+        }).to.throw(Error);
+    });
+
+    it("Should throw a error when parent table of the foreign key is not set", () => {
+        expect(() => {
+            Create.Table("users")
+                .withColumnName("id").asInt32().isIdentity()
+                .withColumnName("contact_id").asInt32().notNull()
+                .withForeignKey("c_id", "", "id");
+        }).to.throw(Error);
+    });
+
+    it("Should throw a error when parent column of the foreign key is not set", () => {
+        expect(() => {
+            Create.Table("users")
+                .withColumnName("id").asInt32().isIdentity()
+                .withColumnName("contact_id").asInt32().notNull()
+                .withForeignKey("c_id", "contacts", "");
+        }).to.throw(Error);
+    });
 });

@@ -47,8 +47,6 @@ var MySqlConnection = /** @class */ (function () {
     MySqlConnection.prototype.connectAsync = function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            // noinspection TsLint
-            console.log("invoke connectAsync");
             _this.conn = mysql.createConnection({
                 database: _this.db,
                 host: _this.hostname,
@@ -67,8 +65,6 @@ var MySqlConnection = /** @class */ (function () {
     MySqlConnection.prototype.queryAsync = function (query) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            // noinspection TsLint
-            console.log("invoke queryAsync", query);
             _this.conn.query(query, function (error, result) {
                 if (error) {
                     return reject(error);

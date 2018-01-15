@@ -16,7 +16,7 @@ let dbContext: DbContext;
 describe("DbContext", () => {
 
     before(async () => {
-        const initConnection = new MySqlConnection("localhost", "root", "root");
+        const initConnection = new MySqlConnection("localhost", "root", "");
         const context = new DbContext(initConnection);
         await context.inTransactionAsync(async (db) => {
             await db.executeAsync(Drop.Database("test"));
@@ -31,7 +31,7 @@ describe("DbContext", () => {
     });
 
     beforeEach(() => {
-        mySql = new MySqlConnection("localhost", "root", "root", "test");
+        mySql = new MySqlConnection("localhost", "root", "", "test");
         dbContext = new DbContext(mySql);
     });
 

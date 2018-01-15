@@ -11,7 +11,7 @@ let mySql: MySqlConnection;
 describe("MySqlConnection", () => {
 
     before(async () => {
-        mySql = new MySqlConnection("localhost", "root", "root");
+        mySql = new MySqlConnection("localhost", "root", "");
         await mySql.executeAsync(Drop.Database("test"));
         await mySql.executeAsync(Create.Database("test"));
         await mySql.executeAsync(Create.Table("test.user")
@@ -23,7 +23,7 @@ describe("MySqlConnection", () => {
     });
 
     beforeEach(() => {
-        mySql = new MySqlConnection("localhost", "root", "root", "test");
+        mySql = new MySqlConnection("localhost", "root", "", "test");
     });
 
     it("Should connect to MySQL server and close it", async () => {
