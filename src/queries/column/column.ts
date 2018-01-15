@@ -1,5 +1,6 @@
 import {Query} from "../query";
 import {ColumnDataType} from "./column-data-type";
+import {DefaultColumn} from "./column-default";
 import {ColumnOptions, ColumnTypes} from "./column-type";
 
 export class Column extends Query implements ColumnOptions, ColumnTypes {
@@ -30,7 +31,7 @@ export class Column extends Query implements ColumnOptions, ColumnTypes {
         return this;
     }
 
-    public asString(length?: string): this {
+    public asString(length?: number): this {
         this.sql += ` ${ColumnDataType.STRING}(${length ? length : "255"})`;
         return this;
     }
@@ -45,8 +46,51 @@ export class Column extends Query implements ColumnOptions, ColumnTypes {
         return this;
     }
 
-    public hasDefault(def: any): this {
-        this.sql += ` ${def ? "DEFAULT '" + def + "'" : ""}`;
+    public asFloat(): this {
+        this.sql += ` ${ColumnDataType.FLOAT}`;
+        return this;
+    }
+
+    public asDecimal(n?: number, n2?: number): this {
+        this.sql += ` ${ColumnDataType.DECIMAL}${n && n2 ? "(" + n + "," + n2 + ")" : ""}`;
+        return this;
+    }
+
+    public asDouble(): this {
+        this.sql += ` ${ColumnDataType.DOUBLE}`;
+        return this;
+    }
+
+    public asDate(): this {
+        this.sql += ` ${ColumnDataType.DATE}`;
+        return this;
+    }
+
+    public asDateTime(): this {
+        this.sql += ` ${ColumnDataType.DATETIME}`;
+        return this;
+    }
+
+    public asTimestamp(): this {
+        this.sql += ` ${ColumnDataType.TIMESTAMP}`;
+        return this;
+    }
+
+    public asText(): this {
+        this.sql += ` ${ColumnDataType.TEXT}`;
+        return this;
+    }
+
+    public hasDefault(def: DefaultColumn | string | number): this {
+        if (!def) {
+            throw new Error("invalid default value");
+        }
+        const m = DefaultColumn[def as any];
+        if (m) {
+            this.sql += ` DEFAULT ${def.toString()}`;
+        } else {
+            this.sql += ` DEFAULT ${typeof def === "string" ? "'" + def + "'" : def.toString()}`;
+        }
         return this;
     }
 }

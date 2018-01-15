@@ -18,4 +18,18 @@ export interface ColumnTypes {
     asBoolean(): ColumnOptions;
 
     asString(): ColumnOptions;
+
+    asFloat(): ColumnOptions;
+
+    asDecimal(n?: number, n2?: number): ColumnOptions;
+
+    asDouble(): ColumnOptions;
+
+    asDate(): ColumnOptions;
+
+    asDateTime(): ColumnOptions;
+
+    asTimestamp(): ColumnOptions;
+
+    asText(): ColumnOptions;
 }

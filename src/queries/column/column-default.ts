@@ -1,0 +1,6 @@
+export enum DefaultColumn {
+    NULL = "NULL",
+    CURRENT_TIMESTAMP = "CURRENT_TIMESTAMP",
+    LOCALTIME = "LOCALTIME",
+    LOCALTIMESTAMP = "LOCALTIMESTAMP",
+}

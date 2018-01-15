@@ -1,4 +1,5 @@
 import { Query } from "../query";
+import { DefaultColumn } from "./column-default";
 import { ColumnOptions, ColumnTypes } from "./column-type";
 export declare class Column extends Query implements ColumnOptions, ColumnTypes {
     private columns;
@@ -6,8 +7,15 @@ export declare class Column extends Query implements ColumnOptions, ColumnTypes 
     asInt32(): this;
     asInt64(): this;
     asBoolean(): this;
-    asString(length?: string): this;
+    asString(length?: number): this;
     isIdentity(): this;
     notNull(): this;
-    hasDefault(def: any): this;
+    asFloat(): this;
+    asDecimal(n?: number, n2?: number): this;
+    asDouble(): this;
+    asDate(): this;
+    asDateTime(): this;
+    asTimestamp(): this;
+    asText(): this;
+    hasDefault(def: DefaultColumn | string | number): this;
 }

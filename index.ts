@@ -13,3 +13,4 @@ export * from "./src/queries/create/create-table";
 export * from "./src/queries/column/column";
 export * from "./src/queries/column/column-data-type";
 export * from "./src/queries/column/column-type";
+export * from "./src/queries/column/column-default";

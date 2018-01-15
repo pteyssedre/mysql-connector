@@ -1,4 +1,3 @@
-
 export enum ColumnDataType {
 
     INT = "INT",
@@ -8,5 +7,8 @@ export enum ColumnDataType {
     DOUBLE = "DOUBLE",
     BOOLEAN = "BOOLEAN",
     STRING = "VARCHAR",
-
+    DATE = "DATE",
+    DATETIME = "DATETIME",
+    TIMESTAMP = "TIMESTAMP",
+    TEXT = "TEXT",
 }

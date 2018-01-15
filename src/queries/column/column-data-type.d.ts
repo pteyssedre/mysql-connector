@@ -6,4 +6,8 @@ export declare enum ColumnDataType {
     DOUBLE = "DOUBLE",
     BOOLEAN = "BOOLEAN",
     STRING = "VARCHAR",
+    DATE = "DATE",
+    DATETIME = "DATETIME",
+    TIMESTAMP = "TIMESTAMP",
+    TEXT = "TEXT",
 }

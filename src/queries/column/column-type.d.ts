@@ -9,4 +9,11 @@ export interface ColumnTypes {
     asInt64(): ColumnOptions;
     asBoolean(): ColumnOptions;
     asString(): ColumnOptions;
+    asFloat(): ColumnOptions;
+    asDecimal(n?: number, n2?: number): ColumnOptions;
+    asDouble(): ColumnOptions;
+    asDate(): ColumnOptions;
+    asDateTime(): ColumnOptions;
+    asTimestamp(): ColumnOptions;
+    asText(): ColumnOptions;
 }

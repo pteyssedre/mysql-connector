@@ -9,5 +9,9 @@ var ColumnDataType;
     ColumnDataType["DOUBLE"] = "DOUBLE";
     ColumnDataType["BOOLEAN"] = "BOOLEAN";
     ColumnDataType["STRING"] = "VARCHAR";
+    ColumnDataType["DATE"] = "DATE";
+    ColumnDataType["DATETIME"] = "DATETIME";
+    ColumnDataType["TIMESTAMP"] = "TIMESTAMP";
+    ColumnDataType["TEXT"] = "TEXT";
 })(ColumnDataType = exports.ColumnDataType || (exports.ColumnDataType = {}));
 //# sourceMappingURL=column-data-type.js.map

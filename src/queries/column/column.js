@@ -12,6 +12,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var query_1 = require("../query");
 var column_data_type_1 = require("./column-data-type");
+var column_default_1 = require("./column-default");
 var Column = /** @class */ (function (_super) {
     __extends(Column, _super);
     function Column() {
@@ -51,8 +52,45 @@ var Column = /** @class */ (function (_super) {
         this.sql += " NOT NULL";
         return this;
     };
+    Column.prototype.asFloat = function () {
+        this.sql += " " + column_data_type_1.ColumnDataType.FLOAT;
+        return this;
+    };
+    Column.prototype.asDecimal = function (n, n2) {
+        this.sql += " " + column_data_type_1.ColumnDataType.DECIMAL + (n && n2 ? "(" + n + "," + n2 + ")" : "");
+        return this;
+    };
+    Column.prototype.asDouble = function () {
+        this.sql += " " + column_data_type_1.ColumnDataType.DOUBLE;
+        return this;
+    };
+    Column.prototype.asDate = function () {
+        this.sql += " " + column_data_type_1.ColumnDataType.DATE;
+        return this;
+    };
+    Column.prototype.asDateTime = function () {
+        this.sql += " " + column_data_type_1.ColumnDataType.DATETIME;
+        return this;
+    };
+    Column.prototype.asTimestamp = function () {
+        this.sql += " " + column_data_type_1.ColumnDataType.TIMESTAMP;
+        return this;
+    };
+    Column.prototype.asText = function () {
+        this.sql += " " + column_data_type_1.ColumnDataType.TEXT;
+        return this;
+    };
     Column.prototype.hasDefault = function (def) {
-        this.sql += " " + (def ? "DEFAULT '" + def + "'" : "");
+        if (!def) {
+            throw new Error("invalid default value");
+        }
+        var m = column_default_1.DefaultColumn[def];
+        if (m) {
+            this.sql += " DEFAULT " + def.toString();
+        }
+        else {
+            this.sql += " DEFAULT " + (typeof def === "string" ? "'" + def + "'" : def.toString());
+        }
         return this;
     };
     return Column;

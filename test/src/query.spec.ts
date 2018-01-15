@@ -3,6 +3,8 @@ import {Create} from "../../src/queries/create/create";
 import {Insert} from "../../src/queries/insert";
 import {Select} from "../../src/queries/select";
 import {Update} from "../../src/queries/update";
+import {DefaultColumn} from "../../src/queries/column/column-default";
+import {type} from "os";
 
 const expect = chai.expect;
 
@@ -79,15 +81,28 @@ describe("Query", () => {
     });
 
     it("Should create a table", () => {
+        // noinspection TsLint
+        console.log(typeof DefaultColumn.LOCALTIMESTAMP)
         const create = Create.Table("chat")
             .withColumnName("id").asInt32().isIdentity()
             .withColumnName("race").asString().notNull()
-            .withColumnName("name").asString().notNull()
-            .withColumnName("cityNumber").asInt64().notNull();
+            .withColumnName("name").asString(400).notNull()
+            .withColumnName("cityNumber").asInt64().notNull()
+            .withColumnName("text_t").asText().hasDefault("T_T")
+            .withColumnName("float_t").asFloat()
+            .withColumnName("decimal_t").asDecimal()
+            .withColumnName("decimal_set_t").asDecimal(10, 4)
+            .withColumnName("date_t").asDate().hasDefault(DefaultColumn.LOCALTIME)
+            .withColumnName("datetime_t").asDateTime().hasDefault(DefaultColumn.LOCALTIMESTAMP)
+            .withColumnName("timestamp_t").asTimestamp().hasDefault(DefaultColumn.CURRENT_TIMESTAMP)
+            .withColumnName("nullable_t").asBoolean().hasDefault(DefaultColumn.NULL);
 
         expect(create.toString())
             .to.be.eq("CREATE TABLE chat ( id INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
-            " race VARCHAR(255) NOT NULL, name VARCHAR(255) NOT NULL, cityNumber BIGINT NOT NULL)");
+            " race VARCHAR(255) NOT NULL, name VARCHAR(400) NOT NULL, cityNumber BIGINT NOT NULL, " +
+            "text_t TEXT DEFAULT 'T_T', float_t FLOAT, decimal_t DECIMAL, decimal_set_t DECIMAL(10,4), " +
+            "date_t DATE DEFAULT LOCALTIME, datetime_t DATETIME DEFAULT LOCALTIMESTAMP, " +
+            "timestamp_t TIMESTAMP DEFAULT CURRENT_TIMESTAMP, nullable_t BOOLEAN DEFAULT NULL)");
     });
 
 });

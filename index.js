@@ -17,4 +17,5 @@ __export(require("./src/queries/drop/drop-table"));
 __export(require("./src/queries/create/create-table"));
 __export(require("./src/queries/column/column"));
 __export(require("./src/queries/column/column-data-type"));
+__export(require("./src/queries/column/column-default"));
 //# sourceMappingURL=index.js.map
