@@ -1,6 +1,6 @@
 {
   "name": "mysqlconnector",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "MySQL connector",
   "main": "index.js",
   "scripts": {

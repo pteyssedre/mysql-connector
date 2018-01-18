@@ -14,7 +14,7 @@ npm i mysqlconnector
 
 The library offer two main approach of a SQL operation: `query` and `transaction`  
 To connect to the database you have to use the `MySqlConnection` class
-````ecmascript 6
+````typescript
     const connection = new MySqlConnection('localhost', 'username', 'password');  
      
     connection.connectAsync().then(() => { 
@@ -29,7 +29,7 @@ To connect to the database you have to use the `MySqlConnection` class
 ````
 
 The use of `Promise` simplify the use of the `MySqlConnection` object
-````ecmascript 6
+````typescript
     const connection = new MySqlConnection('localhost', 'username', 'password');
      
     connection.connectAsync()
@@ -41,7 +41,7 @@ The use of `Promise` simplify the use of the `MySqlConnection` object
 
 The same goes for the use of a query
 
-````ecmascript 6
+````typescript
     const connection = new MySqlConnection('localhost', 'username', 'password');
      
      ...
@@ -61,7 +61,7 @@ To simplify basic queries like `create`, `drop`, `insert`, `select` ... The libr
 be use in a fluent way  
   
 Example of select
-````ecmascript 6
+````typescript
     const query = Select.Table("users");
     console.log(query.toString());
     // SELECT * FROM users
@@ -73,7 +73,7 @@ Example of select
   
   
 Example of update
-````ecmascript 6
+````typescript
     
     let user = { username : 'user', email: 'user@email.com' };
     
@@ -91,8 +91,6 @@ If any thing goes wrong the `rollback` will be executed. Using TypeScript with `
 a nicer way to make sure all your operation happen in the same transaction
 
 ````typescript
-        import {DbContext, MySqlConnection, Insert} from "mysql-connector"
-        
         const mySql = new MySqlConnection("localhost", "root", "root", "test");
         const dbContext = new DbContext(mySql);
         
@@ -111,8 +109,6 @@ The `dbContext` can be pass to other function and the `inTransactionAsync` funct
 it still will be one transaction  
 
 ````typescript
-        import {DbContext, MySqlConnection, Insert} from "mysql-connector"
-        
         const mySql = new MySqlConnection("localhost", "root", "root", "test");
         const dbContext = new DbContext(mySql);
         
