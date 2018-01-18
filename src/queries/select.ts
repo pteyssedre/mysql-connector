@@ -25,9 +25,12 @@ export class Select extends Query {
             throw new Error("invalid table name");
         }
         const select = new Select();
+        select.leftTable = table.trim();
         select.sql += " * FROM " + table.trim();
         return select;
     }
+
+    private leftTable: string;
 
     private constructor() {
         super();
@@ -38,6 +41,7 @@ export class Select extends Query {
         if (!table) {
             throw new Error("invalid table name");
         }
+        this.leftTable = table.trim();
         this.sql += " FROM " + table.trim();
         return this;
     }
@@ -47,6 +51,12 @@ export class Select extends Query {
             throw new Error("no clause was provided for where");
         }
         this.sql += " WHERE " + clause.trim();
+        return this;
+    }
+
+    public leftJoinOn(leftColumn: string, rightTable: string, rightColumn: string): this {
+        const on = `ON ${this.leftTable}.${leftColumn} = ${rightTable.trim()}.${rightColumn.trim()}`;
+        this.sql += ` LEFT JOIN ${rightTable.trim()} ${on}`;
         return this;
     }
 }

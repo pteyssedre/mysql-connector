@@ -264,4 +264,9 @@ describe("Query", () => {
             Drop.Database("");
         }).throw(Error);
     });
+
+    it("Should create a left join", () => {
+        const q = Select.Table("users").leftJoinOn("address_id", "address", "id");
+        expect(q.toString()).to.be.eq("SELECT * FROM users LEFT JOIN address ON users.address_id = address.id");
+    });
 });
