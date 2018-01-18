@@ -25,12 +25,9 @@ export class Select extends Query {
             throw new Error("invalid table name");
         }
         const select = new Select();
-        select.leftTable = table.trim();
         select.sql += " * FROM " + table.trim();
         return select;
     }
-
-    private leftTable: string;
 
     private constructor() {
         super();
@@ -41,7 +38,6 @@ export class Select extends Query {
         if (!table) {
             throw new Error("invalid table name");
         }
-        this.leftTable = table.trim();
         this.sql += " FROM " + table.trim();
         return this;
     }
@@ -54,9 +50,38 @@ export class Select extends Query {
         return this;
     }
 
-    public leftJoinOn(leftColumn: string, rightTable: string, rightColumn: string): this {
-        const on = `ON ${this.leftTable}.${leftColumn} = ${rightTable.trim()}.${rightColumn.trim()}`;
-        this.sql += ` LEFT JOIN ${rightTable.trim()} ${on}`;
+    public leftJoinOn(leftTable: string, leftColumn: string, rightTable: string, rightColumn: string): this {
+        this.joinOn("LEFT JOIN", leftTable, leftColumn, rightTable, rightColumn);
         return this;
+    }
+
+    public leftOuterJoinOn(leftTable: string, leftColumn: string, rightTable: string, rightColumn: string): this {
+        this.joinOn("LEFT OUTER JOIN", leftTable, leftColumn, rightTable, rightColumn);
+        return this;
+    }
+
+    public leftInnerJoinOn(leftTable: string, leftColumn: string, rightTable: string, rightColumn: string): this {
+        this.joinOn("LEFT INNER JOIN", leftTable, leftColumn, rightTable, rightColumn);
+        return this;
+    }
+
+    public rightJoinOn(leftTable: string, leftColumn: string, rightTable: string, rightColumn: string): this {
+        this.joinOn("RIGHT JOIN", leftTable, leftColumn, rightTable, rightColumn);
+        return this;
+    }
+
+    public rightOuterJoinOn(leftTable: string, leftColumn: string, rightTable: string, rightColumn: string): this {
+        this.joinOn("RIGHT OUTER JOIN", leftTable, leftColumn, rightTable, rightColumn);
+        return this;
+    }
+
+    public rightInnerJoinOn(leftTable: string, leftColumn: string, rightTable: string, rightColumn: string): this {
+        this.joinOn("RIGHT INNER JOIN", leftTable, leftColumn, rightTable, rightColumn);
+        return this;
+    }
+
+    private joinOn(joinType: string, leftTable: string, leftColumn: string, rightTable: string, rightColumn: string) {
+        const on = `ON ${leftTable.trim()}.${leftColumn.trim()} = ${rightTable.trim()}.${rightColumn.trim()}`;
+        this.sql += ` ${joinType} ${rightTable.trim()} ${on}`;
     }
 }

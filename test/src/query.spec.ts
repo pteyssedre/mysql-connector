@@ -266,7 +266,32 @@ describe("Query", () => {
     });
 
     it("Should create a left join", () => {
-        const q = Select.Table("users").leftJoinOn("address_id", "address", "id");
+        const q = Select.Table("users")
+            .leftJoinOn("users", "address_id", "address", "id");
         expect(q.toString()).to.be.eq("SELECT * FROM users LEFT JOIN address ON users.address_id = address.id");
+    });
+
+    it("Should create a left inner join", () => {
+        const q = Select.Table("users").leftInnerJoinOn("users", "address_id", "address", "id");
+        expect(q.toString()).to.be.eq("SELECT * FROM users LEFT INNER JOIN address ON users.address_id = address.id");
+    });
+
+    it("Should create a left outer join", () => {
+        const q = Select.Table("users").leftOuterJoinOn("users", "address_id", "address", "id");
+        expect(q.toString()).to.be.eq("SELECT * FROM users LEFT OUTER JOIN address ON users.address_id = address.id");
+    });
+    it("Should create a right join", () => {
+        const q = Select.Table("users").rightJoinOn("users", "address_id", "address", "id");
+        expect(q.toString()).to.be.eq("SELECT * FROM users RIGHT JOIN address ON users.address_id = address.id");
+    });
+
+    it("Should create a right inner join", () => {
+        const q = Select.Table("users").rightInnerJoinOn("users", "address_id", "address", "id");
+        expect(q.toString()).to.be.eq("SELECT * FROM users RIGHT INNER JOIN address ON users.address_id = address.id");
+    });
+
+    it("Should create a right outer join", () => {
+        const q = Select.Table("users").rightOuterJoinOn("users", "address_id", "address", "id");
+        expect(q.toString()).to.be.eq("SELECT * FROM users RIGHT OUTER JOIN address ON users.address_id = address.id");
     });
 });

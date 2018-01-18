@@ -24,7 +24,6 @@ class Select extends query_1.Query {
             throw new Error("invalid table name");
         }
         const select = new Select();
-        select.leftTable = table.trim();
         select.sql += " * FROM " + table.trim();
         return select;
     }
@@ -36,7 +35,6 @@ class Select extends query_1.Query {
         if (!table) {
             throw new Error("invalid table name");
         }
-        this.leftTable = table.trim();
         this.sql += " FROM " + table.trim();
         return this;
     }
@@ -47,10 +45,33 @@ class Select extends query_1.Query {
         this.sql += " WHERE " + clause.trim();
         return this;
     }
-    leftJoinOn(leftColumn, rightTable, rightColumn) {
-        const on = `ON ${this.leftTable}.${leftColumn} = ${rightTable.trim()}.${rightColumn.trim()}`;
-        this.sql += ` LEFT JOIN ${rightTable.trim()} ${on}`;
+    leftJoinOn(leftTable, leftColumn, rightTable, rightColumn) {
+        this.joinOn("LEFT JOIN", leftTable, leftColumn, rightTable, rightColumn);
         return this;
+    }
+    leftOuterJoinOn(leftTable, leftColumn, rightTable, rightColumn) {
+        this.joinOn("LEFT OUTER JOIN", leftTable, leftColumn, rightTable, rightColumn);
+        return this;
+    }
+    leftInnerJoinOn(leftTable, leftColumn, rightTable, rightColumn) {
+        this.joinOn("LEFT INNER JOIN", leftTable, leftColumn, rightTable, rightColumn);
+        return this;
+    }
+    rightJoinOn(leftTable, leftColumn, rightTable, rightColumn) {
+        this.joinOn("RIGHT JOIN", leftTable, leftColumn, rightTable, rightColumn);
+        return this;
+    }
+    rightOuterJoinOn(leftTable, leftColumn, rightTable, rightColumn) {
+        this.joinOn("RIGHT OUTER JOIN", leftTable, leftColumn, rightTable, rightColumn);
+        return this;
+    }
+    rightInnerJoinOn(leftTable, leftColumn, rightTable, rightColumn) {
+        this.joinOn("RIGHT INNER JOIN", leftTable, leftColumn, rightTable, rightColumn);
+        return this;
+    }
+    joinOn(joinType, leftTable, leftColumn, rightTable, rightColumn) {
+        const on = `ON ${leftTable.trim()}.${leftColumn.trim()} = ${rightTable.trim()}.${rightColumn.trim()}`;
+        this.sql += ` ${joinType} ${rightTable.trim()} ${on}`;
     }
 }
 exports.Select = Select;
