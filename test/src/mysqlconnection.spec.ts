@@ -11,7 +11,7 @@ let mySql: MySqlConnection;
 describe("MySqlConnection", () => {
 
     before(async () => {
-        mySql = new MySqlConnection("localhost", "root", "");
+        mySql = new MySqlConnection("127.0.0.1", "root", "");
         await mySql.executeAsync(Drop.Database("test"));
         await mySql.executeAsync(Create.Database("test"));
         await mySql.executeAsync(Create.Table("test.user")
@@ -23,11 +23,11 @@ describe("MySqlConnection", () => {
     });
 
     beforeEach(() => {
-        mySql = new MySqlConnection("localhost", "root", "", "test");
+        mySql = new MySqlConnection("127.0.0.1", "root", "", "test");
     });
 
     it("Should throw an error if connection is not valid", () => {
-        const c: MySqlConnection = new MySqlConnection("localhost", "fake", "fake");
+        const c: MySqlConnection = new MySqlConnection("127.0.0.1", "fake", "fake");
         c.connectAsync().then(() => {
             expect(false).to.eq(true);
         }).catch((exception) => {

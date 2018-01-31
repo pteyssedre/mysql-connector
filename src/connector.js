@@ -43,7 +43,12 @@ class DbContext {
     }
     executeAsync(sql) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.connection.queryAsync(sql.toString());
+            if (!this.connection.connected) {
+                return this.connection.executeAsync(sql.toString());
+            }
+            else {
+                return yield this.connection.queryAsync(sql.toString());
+            }
         });
     }
 }

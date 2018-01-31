@@ -11,5 +11,5 @@ export declare class MySqlConnection {
     connectAsync(): Promise<void>;
     queryAsync(query: string): Promise<any>;
     closeAsync(): Promise<void>;
-    executeAsync(query: Query): Promise<any>;
+    executeAsync(query: string | Query): Promise<any>;
 }

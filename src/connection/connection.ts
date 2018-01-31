@@ -51,7 +51,7 @@ export class MySqlConnection {
         });
     }
 
-    public async executeAsync(query: Query) {
+    public async executeAsync(query: string | Query) {
         await this.connectAsync();
         let result;
         try {

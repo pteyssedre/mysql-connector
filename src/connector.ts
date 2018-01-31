@@ -33,6 +33,10 @@ export class DbContext {
     }
 
     public async executeAsync(sql: string | Query) {
-        return await this.connection.queryAsync(sql.toString());
+        if (!this.connection.connected) {
+            return this.connection.executeAsync(sql.toString());
+        } else {
+            return await this.connection.queryAsync(sql.toString());
+        }
     }
 }

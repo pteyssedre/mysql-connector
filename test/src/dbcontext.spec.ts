@@ -16,7 +16,7 @@ let dbContext: DbContext;
 describe("DbContext", () => {
 
     before(async () => {
-        const initConnection = new MySqlConnection("localhost", "root", "");
+        const initConnection = new MySqlConnection("127.0.0.1", "root", "");
         const context = new DbContext(initConnection);
         await context.inTransactionAsync(async (db) => {
             await db.executeAsync(Drop.Database("test"));
@@ -31,7 +31,7 @@ describe("DbContext", () => {
     });
 
     beforeEach(() => {
-        mySql = new MySqlConnection("localhost", "root", "", "test");
+        mySql = new MySqlConnection("127.0.0.1", "root", "", "test");
         dbContext = new DbContext(mySql);
     });
 
@@ -126,5 +126,13 @@ describe("DbContext", () => {
             expect(result).to.be.a.instanceOf(Array);
             expect(result.length).to.be.eq(0);
         }
+    });
+
+    it("Should execute query without open a transaction before", async () => {
+        should.equal(mySql.connected, false);
+        const result = await dbContext.executeAsync(Select.Table("user"));
+        should.equal(mySql.connected, false);
+        expect(result).to.be.a.instanceOf(Array);
+        expect(result.length).to.be.eq(0);
     });
 });
