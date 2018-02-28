@@ -2,7 +2,9 @@ import chai = require("chai");
 import {MySqlConnection} from "../../src/connection/connection";
 import {Create} from "../../src/queries/create/create";
 import {Drop} from "../../src/queries/drop/drop";
+import {Insert} from "../../src/queries/insert";
 import {Select} from "../../src/queries/select";
+import {Update} from "../../src/queries/update";
 
 const expect = chai.expect;
 const should = chai.should();
@@ -104,5 +106,27 @@ describe("MySqlConnection", () => {
                 expect(mySql.connected).to.be.eq(false);
                 done();
             });
+    });
+
+    it("Should insert data", async () => {
+        await mySql.connectAsync();
+        await mySql.queryAsync(Insert.InTo("user")
+            .property("username", "abcdefg")
+            .property("FirstName", "firstName").toString());
+        await mySql.closeAsync();
+    });
+
+    it("Should update data", async () => {
+        await mySql.connectAsync();
+        const results = await mySql.queryAsync("SELECT * FROM user");
+        const user: any = results[0];
+        user.username = "aaaaaaaaa";
+        const result = await mySql.queryAsync(Update.Table("user")
+            .fromModel(user)
+            .where(`UserId = ${user.UserId}`).toString());
+
+        // noinspection TsLint
+        console.log(result);
+        await mySql.closeAsync();
     });
 });
