@@ -1,13 +1,22 @@
-import {Column} from "../column/column";
+import { Column } from "../column/column";
+import { CreateDatabase } from "./create-database";
 
 export class CreateTable extends Column {
 
-    private foreignKeys: string[];
+    private readonly foreignKeys: string[];
 
     constructor(table: string) {
         super();
         this.foreignKeys = [];
         this.sql = `CREATE TABLE ${table.trim()} (`;
+    }
+
+    public ifNotExists(): CreateDatabase {
+        this.sql = (
+            this.sql.substr(0, 12).trim() + " IF NOT EXISTS " +
+            this.sql.substr(12, this.sql.length).trim()
+        ).trim();
+        return this;
     }
 
     public withForeignKey(property: string, parentTable: string, column: string, foreignKeyName?: string): this {

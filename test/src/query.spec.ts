@@ -1,11 +1,11 @@
 import chai = require("chai");
-import {DefaultColumn} from "../../src/queries/column/column-default";
-import {Create} from "../../src/queries/create/create";
-import {Delete} from "../../src/queries/delete";
-import {Drop} from "../../src/queries/drop/drop";
-import {Insert} from "../../src/queries/insert";
-import {Select} from "../../src/queries/select";
-import {Update} from "../../src/queries/update";
+import { DefaultColumn } from "../../src/queries/column/column-default";
+import { Create } from "../../src/queries/create/create";
+import { Delete } from "../../src/queries/delete";
+import { Drop } from "../../src/queries/drop/drop";
+import { Insert } from "../../src/queries/insert";
+import { Select } from "../../src/queries/select";
+import { Update } from "../../src/queries/update";
 
 const expect = chai.expect;
 
@@ -170,10 +170,27 @@ describe("Query", () => {
             " contact_id INT NOT NULL, FOREIGN KEY my_super_fk(contact_id) REFERENCES contacts(id))");
     });
 
+    it("Should create a table with foreign key with custom name if table exists", () => {
+        const createFk = Create.Table("users")
+            .withColumnName("id").asInt32().isIdentity()
+            .withColumnName("contact_id").asInt32().notNull()
+            .withForeignKey("contact_id", "contacts", "id", "my_super_fk")
+            .ifNotExists();
+
+        expect(createFk.toString()).to.be.eq("CREATE TABLE IF NOT EXISTS " +
+            "users ( id INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
+            " contact_id INT NOT NULL, FOREIGN KEY my_super_fk(contact_id) REFERENCES contacts(id))");
+    });
+
     it("Should throw a error when database name is not valid", () => {
         expect(() => {
             Create.Database("");
         }).to.throw(Error);
+    });
+
+    it("Should create database query", () => {
+        const query = Create.Database("toto").ifNotExists().sql;
+        expect(query).to.be.equal("CREATE DATABASE IF NOT EXISTS toto;");
     });
 
     it("Should throw a error when table name is not valid", () => {

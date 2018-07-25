@@ -7,6 +7,11 @@ class CreateTable extends column_1.Column {
         this.foreignKeys = [];
         this.sql = `CREATE TABLE ${table.trim()} (`;
     }
+    ifNotExists() {
+        this.sql = (this.sql.substr(0, 12).trim() + " IF NOT EXISTS " +
+            this.sql.substr(12, this.sql.length).trim()).trim();
+        return this;
+    }
     withForeignKey(property, parentTable, column, foreignKeyName) {
         if (!property || this.sql.indexOf(property) === -1) {
             throw new Error("property must be declare first");
