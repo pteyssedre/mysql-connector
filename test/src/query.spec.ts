@@ -127,6 +127,12 @@ describe("Query", () => {
         }).to.throw(Error);
     });
 
+    it("Should throw a error when fromModel pass is invalid", () => {
+        expect(() => {
+            Update.Table("user").fromModel(null);
+        }).to.throw(Error);
+    });
+
     it("Should create a table", () => {
         const create = Create.Table("chat")
             .withColumnName("id").asInt32().isIdentity()
@@ -137,6 +143,8 @@ describe("Query", () => {
             .withColumnName("float_t").asFloat()
             .withColumnName("decimal_t").asDecimal().hasDefault(0)
             .withColumnName("decimal_set_t").asDecimal(10, 4)
+            .withColumnName("double").asDouble()
+            .withColumnName("double_set_t").asDouble(10, 4)
             .withColumnName("date_t").asDate().hasDefault(DefaultColumn.LOCALTIME)
             .withColumnName("datetime_t").asDateTime().hasDefault(DefaultColumn.LOCALTIMESTAMP)
             .withColumnName("timestamp_t").asTimestamp().hasDefault(DefaultColumn.CURRENT_TIMESTAMP)
@@ -146,6 +154,7 @@ describe("Query", () => {
             .to.be.eq("CREATE TABLE chat ( id INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
             " race VARCHAR(255) NOT NULL, name VARCHAR(400) NOT NULL, cityNumber BIGINT NOT NULL, " +
             "text_t TEXT DEFAULT 'T_T', float_t FLOAT, decimal_t DECIMAL DEFAULT 0, decimal_set_t DECIMAL(10,4), " +
+            "double DOUBLE, double_set_t DOUBLE(10,4), " +
             "date_t DATE DEFAULT LOCALTIME, datetime_t DATETIME DEFAULT LOCALTIMESTAMP, " +
             "timestamp_t TIMESTAMP DEFAULT CURRENT_TIMESTAMP, nullable_t BOOLEAN DEFAULT NULL)");
     });
@@ -310,5 +319,20 @@ describe("Query", () => {
     it("Should create a right outer join", () => {
         const q = Select.Table("users").rightOuterJoinOn("users", "address_id", "address", "id");
         expect(q.toString()).to.be.eq("SELECT * FROM users RIGHT OUTER JOIN address ON users.address_id = address.id");
+    });
+
+    it("Should getting pagination results using offset", () => {
+        const q = Select.Table("users").limit(10, 10);
+        expect(q.toString()).to.be.eq("SELECT * FROM users LIMIT 10,10");
+    });
+
+    it("Should getting pagination results user page", () => {
+        const q = Select.Table("users").page(2, 10);
+        expect(q.toString()).to.be.eq("SELECT * FROM users LIMIT 20,10");
+    });
+
+    it("Should select given a model object", () => {
+        const q = Select.Table("users").where({username: "toto"});
+        expect(q.toString()).to.be.eq("SELECT * FROM users WHERE username = 'toto'");
     });
 });

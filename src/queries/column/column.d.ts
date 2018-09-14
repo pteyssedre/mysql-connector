@@ -12,7 +12,7 @@ export declare class Column extends Query implements ColumnOptions, ColumnTypes 
     notNull(): this;
     asFloat(): this;
     asDecimal(n?: number, n2?: number): this;
-    asDouble(): this;
+    asDouble(n?: number, n2?: number): this;
     asDate(): this;
     asDateTime(): this;
     asTimestamp(): this;

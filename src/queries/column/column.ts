@@ -56,8 +56,8 @@ export class Column extends Query implements ColumnOptions, ColumnTypes {
         return this;
     }
 
-    public asDouble(): this {
-        this.sql += ` ${ColumnDataType.DOUBLE}`;
+    public asDouble(n?: number, n2?: number): this {
+        this.sql += ` ${ColumnDataType.DOUBLE}${n && n2 ? "(" + n + "," + n2 + ")" : ""}`;
         return this;
     }
 

@@ -17,17 +17,15 @@ export class Update extends Query {
     }
 
     public fromModel(data: any): this {
-        if (!data) {
+        if (!data || typeof data !== "object") {
             throw new Error("no data was provided");
         }
-        if (typeof data === "object") {
-            this.sql += " SET ";
-            const keys = Object.keys(data);
-            for (let i = 0; i < keys.length; i++) {
-                const v = data[keys[i]];
-                const str = typeof v === "string" ? `'${v}'` : `${v}`;
-                this.sql += `${i === 0 ? "" : " "}${keys[i]} = ${str}${i + 1 < keys.length ? "," : ""}`;
-            }
+        this.sql += " SET ";
+        const keys = Object.keys(data);
+        for (let i = 0; i < keys.length; i++) {
+            const v = data[keys[i]];
+            const str = typeof v === "string" ? `'${v}'` : `${v}`;
+            this.sql += `${i === 0 ? "" : " "}${keys[i]} = ${str}${i + 1 < keys.length ? "," : ""}`;
         }
         return this;
     }

@@ -48,8 +48,8 @@ class Column extends query_1.Query {
         this.sql += ` ${column_data_type_1.ColumnDataType.DECIMAL}${n && n2 ? "(" + n + "," + n2 + ")" : ""}`;
         return this;
     }
-    asDouble() {
-        this.sql += ` ${column_data_type_1.ColumnDataType.DOUBLE}`;
+    asDouble(n, n2) {
+        this.sql += ` ${column_data_type_1.ColumnDataType.DOUBLE}${n && n2 ? "(" + n + "," + n2 + ")" : ""}`;
         return this;
     }
     asDate() {
