@@ -4,7 +4,6 @@ export declare class Select extends Query {
     static Table(table: string): Select;
     private constructor();
     table(table: string): this;
-    where(clause: string | any): this;
     limit(offset: number, limit: number): this;
     page(page: number, limit: number): this;
     leftJoinOn(leftTable: string, leftColumn: string, rightTable: string, rightColumn: string): this;

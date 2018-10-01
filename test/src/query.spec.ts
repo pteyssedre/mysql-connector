@@ -4,6 +4,7 @@ import { Create } from "../../src/queries/create/create";
 import { Delete } from "../../src/queries/delete";
 import { Drop } from "../../src/queries/drop/drop";
 import { Insert } from "../../src/queries/insert";
+import { WhereOperator } from "../../src/queries/query";
 import { Select } from "../../src/queries/select";
 import { Update } from "../../src/queries/update";
 
@@ -334,5 +335,15 @@ describe("Query", () => {
     it("Should select given a model object", () => {
         const q = Select.Table("users").where({username: "toto"});
         expect(q.toString()).to.be.eq("SELECT * FROM users WHERE username = 'toto'");
+    });
+
+    it("Should select given a model object with default where operator", () => {
+        const q = Select.Table("users").where({username: "toto", email: "toto@toto.com"});
+        expect(q.toString()).to.be.eq("SELECT * FROM users WHERE username = 'toto' AND email = 'toto@toto.com'");
+    });
+
+    it("Should select given a model object with specific where operator", () => {
+        const q = Select.Table("users").where({username: "toto", email: "toto@toto.com"}, WhereOperator.OR);
+        expect(q.toString()).to.be.eq("SELECT * FROM users WHERE username = 'toto' OR email = 'toto@toto.com'");
     });
 });
