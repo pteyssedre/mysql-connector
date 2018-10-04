@@ -7,6 +7,7 @@ export declare class Column extends Query implements ColumnOptions, ColumnTypes 
     asInt32(): this;
     asInt64(): this;
     asBoolean(): this;
+    asBinary(length: number): this;
     asString(length?: number): this;
     isIdentity(): this;
     notNull(): this;

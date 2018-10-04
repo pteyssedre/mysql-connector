@@ -1,7 +1,7 @@
-import {Query} from "../query";
-import {ColumnDataType} from "./column-data-type";
-import {DefaultColumn} from "./column-default";
-import {ColumnOptions, ColumnTypes} from "./column-type";
+import { Query } from "../query";
+import { ColumnDataType } from "./column-data-type";
+import { DefaultColumn } from "./column-default";
+import { ColumnOptions, ColumnTypes } from "./column-type";
 
 export class Column extends Query implements ColumnOptions, ColumnTypes {
 
@@ -28,6 +28,14 @@ export class Column extends Query implements ColumnOptions, ColumnTypes {
 
     public asBoolean(): this {
         this.sql += ` ${ColumnDataType.BOOLEAN}`;
+        return this;
+    }
+
+    public asBinary(length: number): this {
+        if (isNaN(length)) {
+            throw Error("Binary field must have a valid length");
+        }
+        this.sql += ` ${ColumnDataType.BINARY}(${length})`;
         return this;
     }
 

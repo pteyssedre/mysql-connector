@@ -11,4 +11,5 @@ export enum ColumnDataType {
     DATETIME = "DATETIME",
     TIMESTAMP = "TIMESTAMP",
     TEXT = "TEXT",
+    BINARY = "BIT",
 }

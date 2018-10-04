@@ -111,6 +111,12 @@ describe("Query", () => {
         }).to.throw(Error);
     });
 
+    it("Should throw a exception if binary field do not have length", () => {
+        expect(() => {
+            Create.Table("user").withColumnName("binary_data").asBinary(Number.NaN);
+        }).to.throw(Error);
+    });
+
     it("Should create a update query", () => {
         const update = Update.Table("user").fromModel({username: "toto", type: 2}).where("userId = 1");
         expect(update.sql).to.be.eq("UPDATE user SET username = 'toto', type = 2 WHERE userId = 1");
@@ -307,6 +313,7 @@ describe("Query", () => {
         const q = Select.Table("users").leftOuterJoinOn("users", "address_id", "address", "id");
         expect(q.toString()).to.be.eq("SELECT * FROM users LEFT OUTER JOIN address ON users.address_id = address.id");
     });
+
     it("Should create a right join", () => {
         const q = Select.Table("users").rightJoinOn("users", "address_id", "address", "id");
         expect(q.toString()).to.be.eq("SELECT * FROM users RIGHT JOIN address ON users.address_id = address.id");
@@ -345,5 +352,10 @@ describe("Query", () => {
     it("Should select given a model object with specific where operator", () => {
         const q = Select.Table("users").where({username: "toto", email: "toto@toto.com"}, WhereOperator.OR);
         expect(q.toString()).to.be.eq("SELECT * FROM users WHERE username = 'toto' OR email = 'toto@toto.com'");
+    });
+
+    it("Should create field as binary", () => {
+        const q = Create.Table("user").withColumnName("binary_data").asBinary(1).toString();
+        expect(q).to.be.equals("CREATE TABLE user ( binary_data BIT(1))");
     });
 });

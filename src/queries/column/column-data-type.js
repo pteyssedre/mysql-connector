@@ -13,5 +13,6 @@ var ColumnDataType;
     ColumnDataType["DATETIME"] = "DATETIME";
     ColumnDataType["TIMESTAMP"] = "TIMESTAMP";
     ColumnDataType["TEXT"] = "TEXT";
+    ColumnDataType["BINARY"] = "BIT";
 })(ColumnDataType = exports.ColumnDataType || (exports.ColumnDataType = {}));
 //# sourceMappingURL=column-data-type.js.map

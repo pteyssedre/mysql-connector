@@ -1,4 +1,4 @@
-import {Column} from "./column";
+import { Column } from "./column";
 
 export interface ColumnOptions {
 
@@ -16,6 +16,8 @@ export interface ColumnTypes {
     asInt64(): ColumnOptions;
 
     asBoolean(): ColumnOptions;
+
+    asBinary(length: number): ColumnOptions;
 
     asString(): ColumnOptions;
 

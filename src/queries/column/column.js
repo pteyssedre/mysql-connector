@@ -28,6 +28,13 @@ class Column extends query_1.Query {
         this.sql += ` ${column_data_type_1.ColumnDataType.BOOLEAN}`;
         return this;
     }
+    asBinary(length) {
+        if (isNaN(length)) {
+            throw Error("Binary field must have a valid length");
+        }
+        this.sql += ` ${column_data_type_1.ColumnDataType.BINARY}(${length})`;
+        return this;
+    }
     asString(length) {
         this.sql += ` ${column_data_type_1.ColumnDataType.STRING}(${length ? length : "255"})`;
         return this;

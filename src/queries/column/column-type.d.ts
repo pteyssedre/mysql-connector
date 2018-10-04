@@ -8,6 +8,7 @@ export interface ColumnTypes {
     asInt32(): ColumnOptions;
     asInt64(): ColumnOptions;
     asBoolean(): ColumnOptions;
+    asBinary(length: number): ColumnOptions;
     asString(): ColumnOptions;
     asFloat(): ColumnOptions;
     asDecimal(n?: number, n2?: number): ColumnOptions;
