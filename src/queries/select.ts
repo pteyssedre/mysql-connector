@@ -51,47 +51,47 @@ export class Select extends Query {
         return this.limit(page * limit, limit);
     }
 
-    public leftJoinOn(leftTable: string, leftColumn: string, rightTable: string, rightColumn: string,
+    public leftJoinOn(lTab: string, lCol: string, rTab: string, rCol: string,
                       alias?: string): this {
-        this.joinOn(leftTable, leftColumn, rightTable, rightColumn, alias, "LEFT JOIN");
+        this.joinOn(lTab, lCol, rTab, rCol, alias, "LEFT JOIN");
         return this;
     }
 
-    public leftOuterJoinOn(leftTable: string, leftColumn: string, rightTable: string, rightColumn: string,
+    public leftOuterJoinOn(lTab: string, lCol: string, rTab: string, rCol: string,
                            alias?: string): this {
-        this.joinOn(leftTable, leftColumn, rightTable, rightColumn, alias, "LEFT OUTER JOIN");
+        this.joinOn(lTab, lCol, rTab, rCol, alias, "LEFT OUTER JOIN");
         return this;
     }
 
-    public leftInnerJoinOn(leftTable: string, leftColumn: string, rightTable: string, rightColumn: string,
+    public leftInnerJoinOn(lTab: string, lCol: string, rTab: string, rCol: string,
                            alias?: string): this {
-        this.joinOn(leftTable, leftColumn, rightTable, rightColumn, alias, "LEFT INNER JOIN");
+        this.joinOn(lTab, lCol, rTab, rCol, alias, "LEFT INNER JOIN");
         return this;
     }
 
-    public rightJoinOn(leftTable: string, leftColumn: string, rightTable: string, rightColumn: string,
+    public rightJoinOn(lTab: string, lCol: string, rTab: string, rCol: string,
                        alias?: string): this {
-        this.joinOn(leftTable, leftColumn, rightTable, rightColumn, alias, "RIGHT JOIN");
+        this.joinOn(lTab, lCol, rTab, rCol, alias, "RIGHT JOIN");
         return this;
     }
 
-    public rightOuterJoinOn(leftTable: string, leftColumn: string, rightTable: string, rightColumn: string,
+    public rightOuterJoinOn(lTab: string, lCol: string, rTab: string, rCol: string,
                             alias?: string): this {
-        this.joinOn(leftTable, leftColumn, rightTable, rightColumn, alias, "RIGHT OUTER JOIN");
+        this.joinOn(lTab, lCol, rTab, rCol, alias, "RIGHT OUTER JOIN");
         return this;
     }
 
-    public rightInnerJoinOn(leftTable: string, leftColumn: string, rightTable: string, rightColumn: string,
+    public rightInnerJoinOn(lTab: string, lCol: string, rTab: string, rCol: string,
                             alias?: string): this {
-        this.joinOn(leftTable, leftColumn, rightTable, rightColumn, alias, "RIGHT INNER JOIN");
+        this.joinOn(lTab, lCol, rTab, rCol, alias, "RIGHT INNER JOIN");
         return this;
     }
 
-    public joinOn(leftTable: string, leftColumn: string, rightTable: string, rightColumn: string,
+    public joinOn(lTab: string, lCol: string, rTab: string, rCol: string,
                   alias?: string,
                   joinType: string = "JOIN") {
-        const on = `ON ${leftTable.trim()}.${leftColumn.trim()} = ${rightTable.trim()}.${rightColumn.trim()}`;
-        this.sql += ` ${joinType} ${rightTable.trim()}${alias ? " " + alias.trim() : ""} ${on}`;
+        const on = `ON ${lTab.trim()}.${lCol.trim()} = ${alias ? alias.trim() : rTab.trim()}.${rCol.trim()}`;
+        this.sql += ` ${joinType} ${rTab.trim()}${alias ? " " + alias.trim() : ""} ${on}`;
         return this;
     }
 }
