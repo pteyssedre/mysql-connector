@@ -6,11 +6,11 @@ export declare class Select extends Query {
     table(table: string): this;
     limit(offset: number, limit: number): this;
     page(page: number, limit: number): this;
-    leftJoinOn(leftTable: string, leftColumn: string, rightTable: string, rightColumn: string): this;
-    leftOuterJoinOn(leftTable: string, leftColumn: string, rightTable: string, rightColumn: string): this;
-    leftInnerJoinOn(leftTable: string, leftColumn: string, rightTable: string, rightColumn: string): this;
-    rightJoinOn(leftTable: string, leftColumn: string, rightTable: string, rightColumn: string): this;
-    rightOuterJoinOn(leftTable: string, leftColumn: string, rightTable: string, rightColumn: string): this;
-    rightInnerJoinOn(leftTable: string, leftColumn: string, rightTable: string, rightColumn: string): this;
-    private joinOn(joinType, leftTable, leftColumn, rightTable, rightColumn);
+    leftJoinOn(leftTable: string, leftColumn: string, rightTable: string, rightColumn: string, alias?: string): this;
+    leftOuterJoinOn(leftTable: string, leftColumn: string, rightTable: string, rightColumn: string, alias?: string): this;
+    leftInnerJoinOn(leftTable: string, leftColumn: string, rightTable: string, rightColumn: string, alias?: string): this;
+    rightJoinOn(leftTable: string, leftColumn: string, rightTable: string, rightColumn: string, alias?: string): this;
+    rightOuterJoinOn(leftTable: string, leftColumn: string, rightTable: string, rightColumn: string, alias?: string): this;
+    rightInnerJoinOn(leftTable: string, leftColumn: string, rightTable: string, rightColumn: string, alias?: string): this;
+    joinOn(leftTable: string, leftColumn: string, rightTable: string, rightColumn: string, alias?: string, joinType?: string): this;
 }

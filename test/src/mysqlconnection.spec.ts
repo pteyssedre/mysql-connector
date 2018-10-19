@@ -1,10 +1,10 @@
 import chai = require("chai");
-import {MySqlConnection} from "../../src/connection/connection";
-import {Create} from "../../src/queries/create/create";
-import {Drop} from "../../src/queries/drop/drop";
-import {Insert} from "../../src/queries/insert";
-import {Select} from "../../src/queries/select";
-import {Update} from "../../src/queries/update";
+import { MySqlConnection } from "../../src/connection/connection";
+import { Create } from "../../src/queries/create/create";
+import { Drop } from "../../src/queries/drop/drop";
+import { Insert } from "../../src/queries/insert";
+import { Select } from "../../src/queries/select";
+import { Update } from "../../src/queries/update";
 
 const expect = chai.expect;
 const should = chai.should();
@@ -126,7 +126,8 @@ describe("MySqlConnection", () => {
             .where(`UserId = ${user.UserId}`).toString());
 
         // noinspection TsLint
-        console.log(result);
+        expect(result.affectedRows).to.be.equals(1);
+        expect(result.changedRows).to.be.equals(1);
         await mySql.closeAsync();
     });
 });

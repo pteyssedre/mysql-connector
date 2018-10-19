@@ -1,5 +1,5 @@
 # mysql-connector
-[![Build Status](https://travis-ci.org/pteyssedre/mysql-connector.svg?branch=master)](https://travis-ci.org/pteyssedre/mysql-connector) [![Coverage Status](https://coveralls.io/repos/github/pteyssedre/mysql-connector/badge.svg?branch=master)](https://coveralls.io/github/pteyssedre/mysql-connector?branch=master)
+[![Build Status](https://travis-ci.org/pteyssedre/mysql-connector.svg?branch=master)](https://travis-ci.org/pteyssedre/mysql-connector) [![Coverage Status](https://coveralls.io/repos/github/pteyssedre/mysql-connector/badge.svg?branch=master)](https://coveralls.io/github/pteyssedre/mysql-connector?branch=master) [![David-dm](https://david-dm.org/pteyssedre/mysql-connector.svg)](https://david-dm.org/pteyssedre/mysql-connector.svg)
 
 NodeJs mysql helper. This library will help you to manage connection and operation with your MySQL server. Base 
 on [mysql](https://github.com/mysqljs/mysql) module, this library add helpers to simply you interaction with the data layer
@@ -7,7 +7,7 @@ of your application
 
 ## Introduction
 
-To install simply run the `npm` command
+To install simply run the `npm install` command
 ```bash
 npm i mysqlconnector
 ```

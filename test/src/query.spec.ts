@@ -358,4 +358,16 @@ describe("Query", () => {
         const q = Create.Table("user").withColumnName("binary_data").asBinary(1).toString();
         expect(q).to.be.equals("CREATE TABLE user ( binary_data BIT(1))");
     });
+
+    it("Should create query with simple join", () => {
+        const q = Select.Table("user").joinOn("user", "id", "profile", "user_id").toString();
+        expect(q).to.be.equals("SELECT * FROM user JOIN profile ON user.id = profile.user_id");
+    });
+
+    it("Should create query with simple join with alias", () => {
+        const q = Select.Properties("u.*, p.*")
+            .table("user u")
+            .joinOn("user", "id", "profile", "user_id", "p").toString();
+        expect(q).to.be.equals("SELECT u.*, p.* FROM user u JOIN profile p ON user.id = profile.user_id");
+    });
 });
