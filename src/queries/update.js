@@ -27,13 +27,6 @@ class Update extends query_1.Query {
         }
         return this;
     }
-    where(clause) {
-        if (!clause) {
-            throw new Error("no valid clause was provided");
-        }
-        this.sql += ` WHERE ${clause.trim()}`;
-        return this;
-    }
 }
 exports.Update = Update;
 //# sourceMappingURL=update.js.map

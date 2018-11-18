@@ -29,12 +29,4 @@ export class Update extends Query {
         }
         return this;
     }
-
-    public where(clause: string): this {
-        if (!clause) {
-            throw new Error("no valid clause was provided");
-        }
-        this.sql += ` WHERE ${clause.trim()}`;
-        return this;
-    }
 }

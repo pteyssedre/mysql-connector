@@ -368,6 +368,6 @@ describe("Query", () => {
         const q = Select.Properties("u.*, p.*")
             .table("user u")
             .joinOn("user", "id", "profile", "user_id", "p").toString();
-        expect(q).to.be.equals("SELECT u.*, p.* FROM user u JOIN profile p ON user.id = profile.user_id");
+        expect(q).to.be.equals("SELECT u.*, p.* FROM user u JOIN profile p ON user.id = p.user_id");
     });
 });
