@@ -15,12 +15,4 @@ export class Delete extends Query {
         super();
         this.sql = "DELETE";
     }
-
-    public where(clause: string): this {
-        if (!clause) {
-            throw new Error("no valid clause was provided");
-        }
-        this.sql += ` WHERE ${clause.trim()}`;
-        return this;
-    }
 }

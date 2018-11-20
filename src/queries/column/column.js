@@ -47,6 +47,10 @@ class Column extends query_1.Query {
         this.sql += ` NOT NULL`;
         return this;
     }
+    nullable() {
+        this.sql += ` NULL`;
+        return this;
+    }
     asFloat() {
         this.sql += ` ${column_data_type_1.ColumnDataType.FLOAT}`;
         return this;

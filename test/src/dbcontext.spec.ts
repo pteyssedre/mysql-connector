@@ -26,6 +26,7 @@ describe("DbContext", () => {
                 .withColumnName("username").asString()
                 .withColumnName("FirstName").asString()
                 .withColumnName("LastName").asString()
+                .withColumnName("LoginCount").asInt32().nullable()
                 .withColumnName("Email").asString());
         });
     });
@@ -42,6 +43,7 @@ describe("DbContext", () => {
                 Email: "pierre@teyssedre.ca",
                 FirstName: "toto",
                 LastName: "toto",
+                LoginCount: 0,
                 username: "toto",
             }));
             should.exist(execute);

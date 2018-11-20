@@ -2,6 +2,7 @@ import { Column } from "./column";
 export interface ColumnOptions {
     isIdentity(): ColumnOptions | Column;
     notNull(): ColumnOptions;
+    nullable(): ColumnOptions;
     hasDefault(def: any): ColumnOptions;
 }
 export interface ColumnTypes {

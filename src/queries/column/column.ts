@@ -54,6 +54,11 @@ export class Column extends Query implements ColumnOptions, ColumnTypes {
         return this;
     }
 
+    public nullable(): this {
+        this.sql += ` NULL`;
+        return this;
+    }
+
     public asFloat(): this {
         this.sql += ` ${ColumnDataType.FLOAT}`;
         return this;

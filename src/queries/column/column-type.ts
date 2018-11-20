@@ -6,6 +6,8 @@ export interface ColumnOptions {
 
     notNull(): ColumnOptions;
 
+    nullable(): ColumnOptions;
+
     hasDefault(def: any): ColumnOptions;
 }
 

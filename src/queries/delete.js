@@ -14,13 +14,6 @@ class Delete extends query_1.Query {
         super();
         this.sql = "DELETE";
     }
-    where(clause) {
-        if (!clause) {
-            throw new Error("no valid clause was provided");
-        }
-        this.sql += ` WHERE ${clause.trim()}`;
-        return this;
-    }
 }
 exports.Delete = Delete;
 //# sourceMappingURL=delete.js.map

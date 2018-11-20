@@ -11,6 +11,7 @@ export declare class Column extends Query implements ColumnOptions, ColumnTypes 
     asString(length?: number): this;
     isIdentity(): this;
     notNull(): this;
+    nullable(): this;
     asFloat(): this;
     asDecimal(n?: number, n2?: number): this;
     asDouble(n?: number, n2?: number): this;

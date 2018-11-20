@@ -1,4 +1,4 @@
-import {Query} from "./query";
+import { Query } from "./query";
 
 export class Insert extends Query {
 
@@ -49,7 +49,9 @@ export class Insert extends Query {
         }
         this.sql += ") VALUES (";
         for (let i = 0; i < keys.length; i++) {
-            this.sql += `${i === 0 ? "" : " "}'${obj[keys[i]].toString()}'${i + 1 < keys.length ? "," : ""}`;
+            const str = typeof obj[keys[i]] === "string" ?
+                `'${obj[keys[i]].toString()}'` : `${obj[keys[i]].toString()}`;
+            this.sql += `${i === 0 ? "" : " "}${str}${i + 1 < keys.length ? "," : ""}`;
         }
         this.sql += ")";
         return this;
