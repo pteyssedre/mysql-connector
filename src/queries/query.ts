@@ -25,7 +25,20 @@ export class Query {
                 const str = typeof v === "string" ? `'${v}'` : `${v}`;
                 const n = i + 1 < keys.length ? " " + operator : "";
                 const s = i === 0 ? "" : " ";
-                this.sql += `${s}${keys[i]} = ${str}${n}`;
+                switch (v) {
+                    case null:
+                        this.sql += `${s}${keys[i]} IS NULL${n}`;
+                        break;
+                    case "null":
+                    case "NULL":
+                    case "NOT NULL":
+                    case "not null":
+                        this.sql += `${s}${keys[i]} IS ${v.toUpperCase()}${n}`;
+                        break;
+                    default:
+                        this.sql += `${s}${keys[i]} = ${str}${n}`;
+                        break;
+                }
             }
         }
         return this;

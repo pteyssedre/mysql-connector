@@ -370,4 +370,24 @@ describe("Query", () => {
             .joinOn("user", "id", "profile", "user_id", "p").toString();
         expect(q).to.be.equals("SELECT u.*, p.* FROM user u JOIN profile p ON user.id = p.user_id");
     });
+
+    it("Should create a select query with null value", () => {
+        const q = Select.Table("user")
+            .where({subscription: null}).toString();
+        expect(q).to.be.equals("SELECT * FROM user WHERE subscription IS NULL");
+
+        const q1 = Select.Table("user")
+            .where({subscription: "null"}).toString();
+        expect(q1).to.be.equals("SELECT * FROM user WHERE subscription IS NULL");
+    });
+
+    it("Should create a select query with param not null value", () => {
+        const q = Select.Table("user")
+            .where({subscription: "not null"}).toString();
+        expect(q).to.be.equals("SELECT * FROM user WHERE subscription IS NOT NULL");
+
+        const q1 = Select.Table("user")
+            .where({subscription: "NOT NULL"}).toString();
+        expect(q1).to.be.equals("SELECT * FROM user WHERE subscription IS NOT NULL");
+    });
 });
