@@ -7,6 +7,7 @@ import { Insert } from "../../src/queries/insert";
 import { WhereOperator } from "../../src/queries/query";
 import { Select } from "../../src/queries/select";
 import { Update } from "../../src/queries/update";
+import { Where } from "../../src/queries/where";
 
 const expect = chai.expect;
 
@@ -389,5 +390,22 @@ describe("Query", () => {
         const q1 = Select.Table("user")
             .where({subscription: "NOT NULL"}).toString();
         expect(q1).to.be.equals("SELECT * FROM user WHERE subscription IS NOT NULL");
+    });
+
+    it("Should produce the same query", () => {
+
+        const q1 = Select.Table("user")
+            .where({subscription: "NOT NULL", id: 1}).toString();
+        expect(q1).to.be.equals("SELECT * FROM user WHERE subscription IS NOT NULL AND id = 1");
+
+        const q2 = Select.Table("user")
+            .where(Where({subscription: "NOT NULL"})
+                .and("id", WhereOperator.EQUAL, 1)).toString();
+
+        const q3 = Select.Table("user")
+            .where("subscription IS NOT NULL AND id = 1").toString();
+
+        expect(q1).to.be.equals(q2);
+        expect(q1).to.be.equals(q3);
     });
 });
