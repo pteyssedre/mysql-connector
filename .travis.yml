@@ -5,5 +5,7 @@ services:
   - mysql
 script:
   - npm test
+after_success:
+  - npm run coverage
 notifications:
   slack: teyssedre:FWPzqLce2Lt9AoHPiaMZsrhP

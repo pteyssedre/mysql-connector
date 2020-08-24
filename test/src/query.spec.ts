@@ -408,4 +408,37 @@ describe("Query", () => {
         expect(q1).to.be.equals(q2);
         expect(q1).to.be.equals(q3);
     });
+    it("Where and with string", () => {
+
+        const q1 = Select.Table("user")
+          .where({subscription: "NOT NULL", id: '1'}).toString();
+        expect(q1).to.be.equals("SELECT * FROM user WHERE subscription IS NOT NULL AND id = '1'");
+
+        const q2 = Select.Table("user")
+          .where(Where({subscription: "NOT NULL"})
+            .and("id", WhereOperator.EQUAL, '1')).toString();
+
+        const q3 = Select.Table("user")
+          .where("subscription IS NOT NULL AND id = '1'").toString();
+
+        expect(q1).to.be.equals(q2);
+        expect(q1).to.be.equals(q3);
+    });
+    it("Where or with and without string", () => {
+
+        const q1 = Select.Table("user")
+          .where({subscription: "NOT NULL", id: '1', data: 2}, WhereOperator.OR).toString();
+        expect(q1).to.be.equals("SELECT * FROM user WHERE subscription IS NOT NULL OR id = '1' OR data = 2");
+
+        const q2 = Select.Table("user")
+          .where(Where({subscription: "NOT NULL"})
+            .or("id", WhereOperator.EQUAL, '1')
+            .or("data", WhereOperator.EQUAL, 2)).toString();
+
+        const q3 = Select.Table("user")
+          .where("subscription IS NOT NULL OR id = '1' OR data = 2").toString();
+
+        expect(q1).to.be.equals(q2);
+        expect(q1).to.be.equals(q3);
+    });
 });
