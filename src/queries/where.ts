@@ -20,18 +20,24 @@ export class WhereClause {
     public and(field: string | any, operator?: WhereOperator, value?: number | string): WhereClause {
         if (value && typeof value === "string") {
             value = `'${value}'`;
+        } else {
+          value = value != undefined ? value : ""
         }
+        operator = operator ? operator : WhereOperator.EQUAL
         this.sql = this.sql.trim() + " AND " +
-            `${field} ${operator ? operator.toString() : value} ${value ? value : ""}`.trim();
+            `${field} ${operator.toString()} ${value}`.trim();
         return this;
     }
 
     public or(field: string | any, operator?: WhereOperator, value?: number | string): WhereClause {
         if (value && typeof value === "string") {
             value = `'${value}'`;
+        } else {
+            value = value != undefined ? value : ""
         }
+        operator = operator ? operator : WhereOperator.EQUAL
         this.sql = this.sql.trim() + " OR " +
-            `${field} ${operator ? operator.toString() : value} ${value ? value : ""}`.trim();
+            `${field} ${operator.toString()} ${value}`.trim();
         return this;
     }
 

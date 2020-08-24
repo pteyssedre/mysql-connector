@@ -18,16 +18,24 @@ class WhereClause {
         if (value && typeof value === "string") {
             value = `'${value}'`;
         }
+        else {
+            value = value != undefined ? value : "";
+        }
+        operator = operator ? operator : query_1.WhereOperator.EQUAL;
         this.sql = this.sql.trim() + " AND " +
-            `${field} ${operator ? operator.toString() : value} ${value ? value : ""}`.trim();
+            `${field} ${operator.toString()} ${value}`.trim();
         return this;
     }
     or(field, operator, value) {
         if (value && typeof value === "string") {
             value = `'${value}'`;
         }
+        else {
+            value = value != undefined ? value : "";
+        }
+        operator = operator ? operator : query_1.WhereOperator.EQUAL;
         this.sql = this.sql.trim() + " OR " +
-            `${field} ${operator ? operator.toString() : value} ${value ? value : ""}`.trim();
+            `${field} ${operator.toString()} ${value}`.trim();
         return this;
     }
     parse(model, operator = query_1.WhereOperator.AND) {
