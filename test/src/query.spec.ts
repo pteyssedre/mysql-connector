@@ -411,12 +411,12 @@ describe("Query", () => {
   it("Where and with string", () => {
 
     const q1 = Select.Table("user")
-      .where({subscription: "NOT NULL", id: '1'}).toString();
+      .where({subscription: "NOT NULL", id: "1"}).toString();
     expect(q1).to.be.equals("SELECT * FROM user WHERE subscription IS NOT NULL AND id = '1'");
 
     const q2 = Select.Table("user")
       .where(Where({subscription: "NOT NULL"})
-        .and("id", WhereOperator.EQUAL, '1')).toString();
+        .and("id", WhereOperator.EQUAL, "1")).toString();
 
     const q3 = Select.Table("user")
       .where("subscription IS NOT NULL AND id = '1'").toString();
@@ -427,15 +427,15 @@ describe("Query", () => {
   it("Where or with and without string", () => {
 
     const q1 = Select.Table("user")
-      .where({subscription: "NOT NULL", id: '1', data: 2}, WhereOperator.OR).toString();
+      .where({subscription: "NOT NULL", id: "1", data: 2}, WhereOperator.OR).toString();
     expect(q1).to.be.equals("SELECT * FROM user WHERE subscription IS NOT NULL OR id = '1' OR data = 2");
 
     const q2 = Select.Table("user")
       .where(Where({subscription: "NOT NULL"})
-        .or("id", WhereOperator.EQUAL, '1')
+        .or("id", WhereOperator.EQUAL, "1")
         .or("data", WhereOperator.EQUAL, 2)).toString();
 
-        const q3 = Select.Table("user")
+    const q3 = Select.Table("user")
           .where("subscription IS NOT NULL OR id = '1' OR data = 2").toString();
 
     expect(q1).to.be.equals(q2);
@@ -444,12 +444,12 @@ describe("Query", () => {
   it("Where and with invalid cases", () => {
 
     const q1 = Select.Table("user")
-      .where({subscription: "NOT NULL", id: '1', data: 0}).toString();
+      .where({subscription: "NOT NULL", id: "1", data: 0}).toString();
     expect(q1).to.be.equals("SELECT * FROM user WHERE subscription IS NOT NULL AND id = '1' AND data = 0");
 
     const q2 = Select.Table("user")
       .where(Where({subscription: "NOT NULL"})
-        .and("id", undefined, '1')
+        .and("id", undefined, "1")
         .and("data", undefined, 0)).toString();
 
     const q3 = Select.Table("user")
@@ -461,12 +461,12 @@ describe("Query", () => {
   it("Where or with invalid cases", () => {
 
     const q1 = Select.Table("user")
-      .where({subscription: "NOT NULL", id: '1', data: 0}, WhereOperator.OR).toString();
+      .where({subscription: "NOT NULL", id: "1", data: 0}, WhereOperator.OR).toString();
     expect(q1).to.be.equals("SELECT * FROM user WHERE subscription IS NOT NULL OR id = '1' OR data = 0");
 
     const q2 = Select.Table("user")
       .where(Where({subscription: "NOT NULL"})
-        .or("id", undefined, '1')
+        .or("id", undefined, "1")
         .or("data", undefined, 0)).toString();
 
     const q3 = Select.Table("user")
@@ -475,12 +475,12 @@ describe("Query", () => {
     expect(q1).to.be.equals(q2);
     expect(q1).to.be.equals(q3);
   });
-  it('should validate null and not null cases', () => {
+  it("should validate null and not null cases", () => {
 
     const q1 = Select.Table("user")
-      .where({subscription: "NOT NULL", id: 'not null', data: 'null', tata: null}).toString();
-    expect(q1).to.be.equals("SELECT * FROM user WHERE subscription IS NOT NULL AND id IS NOT NULL AND data IS NULL AND tata IS NULL");
-
+      .where({subscription: "NOT NULL", id: "not null", data: "null", tata: null}).toString();
+    expect(q1).to.be.equals("SELECT * FROM user WHERE subscription IS NOT NULL" +
+        " AND id IS NOT NULL AND data IS NULL AND tata IS NULL");
 
     const q2 = Select.Table("user")
       .where(Where({subscription: "NOT NULL"})
@@ -494,28 +494,29 @@ describe("Query", () => {
         .and("data", WhereOperator.NOT_NULL)).toString();
     expect(q3).to.be.equals("SELECT * FROM user WHERE subscription IS NOT NULL AND id != 1 AND data IS NOT NULL");
   });
-  it('should create the same output', () => {
+  it("should create the same output", () => {
 
-    const q1 = Select.Table("user").where(Where({data: 'null', id: 'not null'})).toString()
+    const q1 = Select.Table("user").where(Where({data: "null", id: "not null"})).toString();
 
-    const q2 = Select.Table("user").where(WhereClause.fromModel({data: 'null', id: 'not null'})).toString()
-    const q4 = Select.Table("user").where(new WhereClause({data: 'null', id: 'not null'})).toString()
+    const q2 = Select.Table("user").where(WhereClause.fromModel({data: "null", id: "not null"})).toString();
+    const q4 = Select.Table("user").where(new WhereClause({data: "null", id: "not null"})).toString();
 
-    const q3 = 'SELECT * FROM user WHERE data IS NULL AND id IS NOT NULL'
+    const q3 = "SELECT * FROM user WHERE data IS NULL AND id IS NOT NULL";
     expect(q1).to.be.equals(q2);
     expect(q1).to.be.equals(q3);
     expect(q1).to.be.equals(q4);
-  })
-  it('should create the same output', () => {
+  });
+  it("should create the same output", () => {
 
-    const q1 = Select.Table("user").where(Where({data: 'null', id: 'not null'}, WhereOperator.OR)).toString()
+    const q1 = Select.Table("user").where(Where({data: "null", id: "not null"}, WhereOperator.OR)).toString();
 
-    const q2 = Select.Table("user").where(WhereClause.fromModel({data: 'null', id: 'not null'}, WhereOperator.OR)).toString()
-    const q4 = Select.Table("user").where(new WhereClause({data: 'null', id: 'not null'}, WhereOperator.OR)).toString()
+    const q2 = Select.Table("user").where(WhereClause
+        .fromModel({data: "null", id: "not null"}, WhereOperator.OR)).toString();
+    const q4 = Select.Table("user").where(new WhereClause({data: "null", id: "not null"}, WhereOperator.OR)).toString();
 
-    const q3 = 'SELECT * FROM user WHERE data IS NULL OR id IS NOT NULL'
+    const q3 = "SELECT * FROM user WHERE data IS NULL OR id IS NOT NULL";
     expect(q1).to.be.equals(q2);
     expect(q1).to.be.equals(q3);
     expect(q1).to.be.equals(q4);
-  })
+  });
 });
