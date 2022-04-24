@@ -30,9 +30,7 @@ describe("MySqlConnection", () => {
 
     it("Should throw an error if connection is not valid", () => {
         const c: MySqlConnection = new MySqlConnection("127.0.0.1", "fake", "fake");
-        c.connectAsync().then(() => {
-            expect(false).to.eq(true);
-        }).catch((exception) => {
+        c.connectAsync().catch((exception) => {
             expect(exception).to.not.eq(null);
         });
     });
@@ -82,9 +80,6 @@ describe("MySqlConnection", () => {
     it("Should catch a error if something goes wrong with the query", (done) => {
         mySql.connectAsync().then(() => {
             mySql.queryAsync("SELECT * FROM users")
-                .then(() => {
-                    expect(false).to.be.eq(true);
-                })
                 .catch((exception) => {
                     expect(exception).to.not.eq(undefined);
                     expect(mySql.connected).to.be.eq(true);
@@ -98,9 +93,6 @@ describe("MySqlConnection", () => {
 
     it("Should catch a error if something goes wrong with the query", (done) => {
         mySql.executeAsync(Create.Table("user"))
-            .then(() => {
-                expect(false).to.be.eq(true);
-            })
             .catch((exception) => {
                 expect(exception).to.not.eq(undefined);
                 expect(mySql.connected).to.be.eq(false);
