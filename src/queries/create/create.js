@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Create = void 0;
 const create_database_1 = require("./create-database");
 const create_table_1 = require("./create-table");
 class Create {

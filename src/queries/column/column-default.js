@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.DefaultColumn = void 0;
 var DefaultColumn;
 (function (DefaultColumn) {
     DefaultColumn["NULL"] = "NULL";

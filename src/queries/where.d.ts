@@ -6,5 +6,5 @@ export declare class WhereClause {
     constructor(model?: any, operator?: WhereOperator);
     and(field: string | any, operator?: WhereOperator, value?: number | string): WhereClause;
     or(field: string | any, operator?: WhereOperator, value?: number | string): WhereClause;
-    private parse(model, operator?);
+    private parse;
 }

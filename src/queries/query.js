@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Query = exports.WhereOperator = void 0;
 const where_1 = require("./where");
 var WhereOperator;
 (function (WhereOperator) {
@@ -27,7 +28,7 @@ class Query {
                 this.sql += clause.sql;
             }
             else {
-                this.sql += where_1.Where(clause, operator).sql;
+                this.sql += (0, where_1.Where)(clause, operator).sql;
             }
         }
         return this;

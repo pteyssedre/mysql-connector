@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Column = void 0;
 const query_1 = require("../query");
 const column_data_type_1 = require("./column-data-type");
 const column_default_1 = require("./column-default");
@@ -83,6 +84,7 @@ class Column extends query_1.Query {
         if (!def && def !== 0) {
             throw new Error("invalid default value");
         }
+        // @ts-ignore
         const m = column_default_1.DefaultColumn[def];
         if (m) {
             this.sql += ` DEFAULT ${def.toString()}`;

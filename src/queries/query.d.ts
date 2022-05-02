@@ -5,7 +5,7 @@ export declare enum WhereOperator {
     DIFFERENT = "!=",
     EQUAL = "=",
     NOT_NULL = "IS NOT NULL",
-    NULL = "IS NULL",
+    NULL = "IS NULL"
 }
 export declare class Query {
     sql: string;

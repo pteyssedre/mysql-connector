@@ -1,12 +1,12 @@
 import mysql = require("mysql");
 import { Query } from "../queries/query";
 export declare class MySqlConnection {
-    private hostname;
-    private username;
-    private password;
-    private db;
+    private hostname?;
+    private username?;
+    private password?;
+    private db?;
     connected: boolean;
-    conn: mysql.Connection;
+    conn: mysql.Connection | undefined;
     constructor(hostname?: string | undefined, username?: string | undefined, password?: string | undefined, db?: string | undefined);
     connectAsync(): Promise<void>;
     queryAsync(query: string): Promise<any>;

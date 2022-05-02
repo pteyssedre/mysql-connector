@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Delete = void 0;
 const query_1 = require("./query");
 class Delete extends query_1.Query {
     static From(table) {

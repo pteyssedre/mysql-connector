@@ -4,7 +4,7 @@ import {Query} from "../queries/query";
 export class MySqlConnection {
 
     public connected: boolean;
-    public conn: mysql.Connection;
+    public conn: mysql.Connection | undefined;
 
     constructor(private hostname?: string, private username?: string, private password?: string, private db?: string) {
         this.connected = false;
@@ -30,6 +30,9 @@ export class MySqlConnection {
 
     public queryAsync(query: string) {
         return new Promise<any>((resolve, reject) => {
+            if (!this.conn) {
+                return reject('connection not initialized');
+            }
             this.conn.query(query, (error, result) => {
                 if (error) {
                     return reject(error);
@@ -41,6 +44,9 @@ export class MySqlConnection {
 
     public closeAsync() {
         return new Promise<void>((resolve, reject) => {
+            if (!this.conn) {
+                return reject('connection not initialized');
+            }
             this.conn.end((error) => {
                 if (error) {
                     return reject(error);

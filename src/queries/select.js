@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Select = void 0;
 const query_1 = require("./query");
 class Select extends query_1.Query {
     static Properties(...properties) {

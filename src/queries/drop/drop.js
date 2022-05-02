@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Drop = void 0;
 const drop_table_1 = require("./drop-table");
 class Drop {
     static Database(name) {

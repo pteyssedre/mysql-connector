@@ -98,6 +98,7 @@ export class Column extends Query implements ColumnOptions, ColumnTypes {
         if (!def && def !== 0) {
             throw new Error("invalid default value");
         }
+        // @ts-ignore
         const m = DefaultColumn[def as any];
         if (m) {
             this.sql += ` DEFAULT ${def.toString()}`;

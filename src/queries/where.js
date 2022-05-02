@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.WhereClause = exports.Where = void 0;
 const query_1 = require("./query");
 function Where(clause, operator = query_1.WhereOperator.AND) {
     return WhereClause.fromModel(clause, operator);

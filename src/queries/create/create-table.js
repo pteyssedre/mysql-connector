@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.CreateTable = void 0;
 const column_1 = require("../column/column");
 class CreateTable extends column_1.Column {
     constructor(table) {

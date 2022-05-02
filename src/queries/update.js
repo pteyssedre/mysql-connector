@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Update = void 0;
 const query_1 = require("./query");
 class Update extends query_1.Query {
     static Table(table) {

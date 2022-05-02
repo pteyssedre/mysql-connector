@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ColumnDataType = void 0;
 var ColumnDataType;
 (function (ColumnDataType) {
     ColumnDataType["INT"] = "INT";
