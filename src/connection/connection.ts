@@ -24,7 +24,7 @@ export class MySqlConnection {
                 host: this.configuration.hostname,
                 password: this.configuration.password,
                 user: this.configuration.username,
-                port: this.configuration.port,
+                port: this.configuration.port ?? 3306,
             });
             this.conn.connect((error) => {
                 if (error) {
