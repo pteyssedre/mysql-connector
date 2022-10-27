@@ -12,20 +12,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MySqlConnection = void 0;
 const mysql = require("mysql");
 class MySqlConnection {
-    constructor(hostname, username, password, db) {
-        this.hostname = hostname;
-        this.username = username;
-        this.password = password;
-        this.db = db;
+    constructor(configuration) {
+        this.configuration = configuration;
         this.connected = false;
     }
     connectAsync() {
         return new Promise((resolve, reject) => {
+            var _a;
             this.conn = mysql.createConnection({
-                database: this.db,
-                host: this.hostname,
-                password: this.password,
-                user: this.username,
+                database: this.configuration.db,
+                host: this.configuration.hostname,
+                password: this.configuration.password,
+                user: this.configuration.username,
+                port: (_a = this.configuration.port) !== null && _a !== void 0 ? _a : 3306,
             });
             this.conn.connect((error) => {
                 if (error) {

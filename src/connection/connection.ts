@@ -6,7 +6,6 @@ export class MySqlConnection {
     public connected: boolean;
     public conn: mysql.Connection | undefined;
 
-    // constructor(private hostname?: string, private username?: string, private password?: string, private db?: string) {
     constructor(private configuration: {
         hostname?: string,
         username?: string,

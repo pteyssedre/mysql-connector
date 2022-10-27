@@ -18,9 +18,10 @@ describe("DbContext", () => {
     before(async () => {
         // const initConnection = new MySqlConnection("127.0.0.1", "root", "");
         const initConnection = new MySqlConnection({
-            hostname: "127.0.0.1",
+            hostname: "localhost",
             username: "root",
-            password: ""
+            password: "",
+            port: 3306
         });
         const context = new DbContext(initConnection);
         await context.inTransactionAsync(async (db) => {

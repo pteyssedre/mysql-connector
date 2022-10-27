@@ -5,11 +5,11 @@ export declare class MySqlConnection {
     connected: boolean;
     conn: mysql.Connection | undefined;
     constructor(configuration: {
-        hostname?: string | undefined,
-        username?: string | undefined,
-        password?: string | undefined,
-        db?: string | undefined,
-        port?: number | undefined
+        hostname?: string;
+        username?: string;
+        password?: string;
+        db?: string;
+        port?: number;
     });
     connectAsync(): Promise<void>;
     queryAsync(query: string): Promise<any>;
