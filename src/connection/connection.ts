@@ -6,17 +6,25 @@ export class MySqlConnection {
     public connected: boolean;
     public conn: mysql.Connection | undefined;
 
-    constructor(private hostname?: string, private username?: string, private password?: string, private db?: string) {
+    // constructor(private hostname?: string, private username?: string, private password?: string, private db?: string) {
+    constructor(private configuration: {
+        hostname?: string,
+        username?: string,
+        password?: string,
+        db?: string,
+        port?: number,
+    }) {
         this.connected = false;
     }
 
     public connectAsync() {
         return new Promise<void>((resolve, reject) => {
             this.conn = mysql.createConnection({
-                database: this.db,
-                host: this.hostname,
-                password: this.password,
-                user: this.username,
+                database: this.configuration.db,
+                host: this.configuration.hostname,
+                password: this.configuration.password,
+                user: this.configuration.username,
+                port: this.configuration.port ?? 3306,
             });
             this.conn.connect((error) => {
                 if (error) {

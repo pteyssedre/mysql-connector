@@ -15,7 +15,13 @@ npm i mysqlconnector
 The library offer two main approach of a SQL operation: `query` and `transaction`  
 To connect to the database you have to use the `MySqlConnection` class
 ````typescript
-    const connection = new MySqlConnection('localhost', 'username', 'password');  
+    // const connection = new MySqlConnection('localhost', 'username', 'password');
+    const connection = new MySqlConnection({
+        hostname: "localhost",
+        username: "root",
+        password: "",
+        port: 3306,
+    });  
      
     connection.connectAsync().then(() => { 
         
@@ -30,7 +36,11 @@ To connect to the database you have to use the `MySqlConnection` class
 
 The use of `Promise` simplify the use of the `MySqlConnection` object
 ````typescript
-    const connection = new MySqlConnection('localhost', 'username', 'password');
+    const connection = new MySqlConnection({
+            hostname: "localhost",
+            username: "root",
+            password: "root"
+        });
      
     connection.connectAsync()
         .then(() => { })
@@ -42,7 +52,11 @@ The use of `Promise` simplify the use of the `MySqlConnection` object
 The same goes for the use of a query
 
 ````typescript
-    const connection = new MySqlConnection('localhost', 'username', 'password');
+    const connection = new MySqlConnection({
+        hostname: "localhost",
+        username: "root",
+        password: "root"
+    });
      
      ...
      
@@ -91,7 +105,12 @@ If any thing goes wrong the `rollback` will be executed. Using TypeScript with `
 a nicer way to make sure all your operation happen in the same transaction
 
 ````typescript
-        const mySql = new MySqlConnection("localhost", "root", "root", "test");
+        const mySql = new MySqlConnection({
+            hostname: "localhost",
+            username: "root",
+            password: "root",
+            database: "test"
+        });
         const dbContext = new DbContext(mySql);
         
         await dbContext.inTransactionAsync(async () => {
@@ -109,7 +128,12 @@ The `dbContext` can be pass to other function and the `inTransactionAsync` funct
 it still will be one transaction  
 
 ````typescript
-        const mySql = new MySqlConnection("localhost", "root", "root", "test");
+        const mySql = new MySqlConnection({
+            hostname: "localhost",
+            username: "root",
+            password: "root",
+            database: "test"
+        });
         const dbContext = new DbContext(mySql);
         
         
