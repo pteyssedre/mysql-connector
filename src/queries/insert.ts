@@ -50,7 +50,7 @@ export class Insert extends Query {
         this.sql += ") VALUES (";
         for (let i = 0; i < keys.length; i++) {
             const str = typeof obj[keys[i]] === "string" ?
-                `'${obj[keys[i]].toString()}'` : `${obj[keys[i]].toString()}`;
+                `'${obj[keys[i]].toString()}'` : `${obj[keys[i]] === undefined || obj[keys[i]] === null ? 'NULL' : obj[keys[i]].toString()}`;
             this.sql += `${i === 0 ? "" : " "}${str}${i + 1 < keys.length ? "," : ""}`;
         }
         this.sql += ")";

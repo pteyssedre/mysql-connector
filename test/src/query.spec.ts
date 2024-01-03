@@ -65,6 +65,18 @@ describe("Query", () => {
     const insert = Insert.InTo("user").fromModel({username: "toto", FirstName: "pierre", LastName: "test"});
     expect(insert.sql)
       .to.be.eq("INSERT INTO user (username, FirstName, LastName) VALUES ('toto', 'pierre', 'test')");
+  })
+
+  it("Should create a insert query from model with NULL value", () => {
+    const insert = Insert.InTo("user").fromModel({username: "toto", FirstName: "pierre", LastName: null});
+    expect(insert.sql)
+        .to.be.eq("INSERT INTO user (username, FirstName, LastName) VALUES ('toto', 'pierre', NULL)");
+  });
+
+  it("Should create a insert query from model with UNDEFINED value", () => {
+    const insert = Insert.InTo("user").fromModel({username: "toto", FirstName: "pierre", LastName: undefined});
+    expect(insert.sql)
+        .to.be.eq("INSERT INTO user (username, FirstName, LastName) VALUES ('toto', 'pierre', NULL)");
   });
 
   it("Should create a insert query with property", () => {
