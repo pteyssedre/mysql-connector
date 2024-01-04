@@ -10,6 +10,7 @@ export declare class MySqlConnection {
         password?: string;
         db?: string;
         port?: number;
+        typeCast?: () => void;
     });
     connectAsync(): Promise<void>;
     queryAsync(query: string): Promise<any>;

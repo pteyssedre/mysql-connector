@@ -18,13 +18,14 @@ class MySqlConnection {
     }
     connectAsync() {
         return new Promise((resolve, reject) => {
-            var _a;
+            var _a, _b;
             this.conn = mysql.createConnection({
                 database: this.configuration.db,
                 host: this.configuration.hostname,
                 password: this.configuration.password,
                 user: this.configuration.username,
                 port: (_a = this.configuration.port) !== null && _a !== void 0 ? _a : 3306,
+                typeCast: (_b = this.configuration.typeCast) !== null && _b !== void 0 ? _b : undefined
             });
             this.conn.connect((error) => {
                 if (error) {

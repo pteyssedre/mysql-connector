@@ -12,6 +12,7 @@ export class MySqlConnection {
         password?: string,
         db?: string,
         port?: number,
+        typeCast?: () => void
     }) {
         this.connected = false;
     }
@@ -24,6 +25,7 @@ export class MySqlConnection {
                 password: this.configuration.password,
                 user: this.configuration.username,
                 port: this.configuration.port ?? 3306,
+                typeCast: this.configuration.typeCast ?? undefined
             });
             this.conn.connect((error) => {
                 if (error) {
