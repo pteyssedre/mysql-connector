@@ -1,4 +1,5 @@
 import mysql = require("mysql");
+import { TypeCast } from "mysql";
 import { Query } from "../queries/query";
 export declare class MySqlConnection {
     private configuration;
@@ -10,7 +11,7 @@ export declare class MySqlConnection {
         password?: string;
         db?: string;
         port?: number;
-        typeCast?: () => void;
+        typeCast?: TypeCast;
     });
     connectAsync(): Promise<void>;
     queryAsync(query: string): Promise<any>;
