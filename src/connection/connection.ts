@@ -1,4 +1,5 @@
 import mysql = require("mysql");
+import {TypeCast} from "mysql";
 import {Query} from "../queries/query";
 
 export class MySqlConnection {
@@ -12,7 +13,7 @@ export class MySqlConnection {
         password?: string,
         db?: string,
         port?: number,
-        typeCast?: () => void
+        typeCast?: TypeCast
     }) {
         this.connected = false;
     }
