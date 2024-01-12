@@ -357,6 +357,11 @@ describe("Query", () => {
     expect(q.toString()).to.be.eq("SELECT * FROM users WHERE username = 'toto'");
   });
 
+  it("Should select given a model object with array value", () => {
+    const q = Select.Table("users").where({username: ["toto", "tata"]});
+    expect(q.toString()).to.be.eq("SELECT * FROM users WHERE username IN ('toto', 'tata')");
+  });
+
   it("Should select given a model object with default where operator", () => {
     const q = Select.Table("users").where({username: "toto", email: "toto@toto.com"});
     expect(q.toString()).to.be.eq("SELECT * FROM users WHERE username = 'toto' AND email = 'toto@toto.com'");
